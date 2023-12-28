@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCDpqvNUyBXZsfKQItz5PlLOfmN41C_LGI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>105867985875</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.doctor</string>
+	<key>PROJECT_ID</key>
+	<string>doctor-appointment-d8a8b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>doctor-appointment-d8a8b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:105867985875:ios:e2ecef1d4eec8bc0c02526</string>
+</dict>
+</plist>
