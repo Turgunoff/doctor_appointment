@@ -4,18 +4,6 @@ import 'package:lottie/lottie.dart';
 
 import '../auth_bloc/auth_bloc.dart';
 
-class LoginScreenWrapper extends StatelessWidget {
-  const LoginScreenWrapper({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(),
-      child: const LoginScreen(),
-    );
-  }
-}
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
