@@ -15,19 +15,19 @@ import '../presentation/inbox_screen/inbox_screen.dart';
 import '../presentation/explore_screen/explore_screen.dart';
 import '../presentation/my_booking_screen/my_booking_screen.dart';
 import '../presentation/navigation/navigation_page.dart';
-import '../presentation/profile_screen/profile_screen.dart';
+import '../presentation/profile/profile_screen.dart';
 
 class AppRoutes {
   static const String splashScreen = '/splash_screen';
-  static const String navigationPage = '/navigationPage';
-  static const String homeScreen = '/home_screen';
-  static const String exploreScreen = '/exploreScreen';
   static const String myBookingScreen = '/myBookingScreen';
   static const String inboxScreen = '/inboxScreen';
   static const String profileScreen = '/profileScreen';
-  static const String initialRoute = '/initialRoute';
   static const String signInScreen = '/signInScreen';
   static const String signUpScreen = '/signUpScreen';
+  static const String homeScreen = '/homeScreen';
+  static const String exploreScreen = '/exploreScreen';
+  static const String navigationPage = '/navigationPage';
+  static const String initialRoute = '/splashScreen';
 
   static List<GetPage> pages = [
     GetPage(

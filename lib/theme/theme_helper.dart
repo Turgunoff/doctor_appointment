@@ -5,14 +5,13 @@
 
 import 'package:flutter/material.dart';
 
-const primaryColor = Color(0xFF6200EE);
+const primaryColor = Color(0xFF0EBE7E);
 
 class ThemeHelper {
   final darkTheme = ThemeData(
     useMaterial3: true,
     primaryColor: primaryColor,
     textTheme: _textTheme,
-    scaffoldBackgroundColor: const Color(0xFF121212),
     dividerTheme: DividerThemeData(
       color: Colors.grey.withOpacity(0.1),
       space: 0,
@@ -28,7 +27,7 @@ class ThemeHelper {
     useMaterial3: true,
     primaryColor: primaryColor,
     textTheme: _textTheme,
-    scaffoldBackgroundColor: const Color(0xFFFAFAFA),
+    scaffoldBackgroundColor: Colors.white,
     dividerTheme: DividerThemeData(
       color: Colors.grey.withOpacity(0.1),
       space: 0,

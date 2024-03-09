@@ -14,9 +14,16 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: const Center(
-        child: Text('Home Screen'),
-      ),
+      body: ListView.builder(
+        shrinkWrap: true,
+        itemCount: 50,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text('Item $index'),
+            onTap: () {},
+          );
+        },
+      )
     );
   }
 }
