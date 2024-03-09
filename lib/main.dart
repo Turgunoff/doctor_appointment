@@ -1,17 +1,25 @@
 import 'package:doctor/firebase_options.dart';
+import 'package:doctor/routes/app_routes.dart';
+import 'package:doctor/theme/theme_helper.dart';
+import 'package:doctor/theme/theme_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-import 'features/auth/views/login_screen.dart';
-import 'features/auth/views/user_register_screen.dart';
-import 'features/home/views/home_screen.dart';
-import 'features/main_screen/main_screen.dart';
-import 'features/profile/profile_screen.dart';
-import 'features/splash/views/splash_screen.dart';
+import 'package:get_storage/get_storage.dart';
+import 'localization/app_localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+  await GetStorage.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -25,34 +33,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Doctor Appointment BLoC',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          color: Colors.white,
-          centerTitle: true,
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Color(0xFF374151),
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        textTheme: const TextTheme(
-          bodySmall: TextStyle(fontSize: 16),
-          bodyLarge: TextStyle(fontSize: 26),
-        ),
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreenWrapper(),
-        '/home': (context) => const HomeScreenWrapper(),
-        '/login': (context) => const LoginScreenWrapper(),
-        '/userRegister': (context) => const RegisterScreenWrapper(),
-        '/mainScreen': (context) => const MainScreen(),
-        '/profileScreen': (context) => const ProfileScreenWrapper(),
-      },
+      theme: ThemeHelper().lightTheme,
+      darkTheme: ThemeHelper().darkTheme,
+      themeMode: ThemeService().getThemeMode(),
+      translations: AppLocalization(),
+      locale: Get.deviceLocale, //for setting localization strings
+      fallbackLocale: const Locale('ru', 'RU'),
+      title: 'fruits_shop',
+      initialRoute: AppRoutes.initialRoute,
+      getPages: AppRoutes.pages,
     );
   }
 }
