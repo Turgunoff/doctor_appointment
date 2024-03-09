@@ -3,7 +3,6 @@
 // @Date: 30.01.2024
 //
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
@@ -21,7 +20,6 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  // page controller instance
   late PageController _pageController;
   int selectedIndex = 0;
 
@@ -48,7 +46,7 @@ class _NavigationPageState extends State<NavigationPage> {
             child: PageView(
               physics: const NeverScrollableScrollPhysics(),
               controller: _pageController,
-              children: const [
+              children: [
                 HomeScreen(),
                 ExploreScreen(),
                 InboxScreen(),
@@ -58,25 +56,14 @@ class _NavigationPageState extends State<NavigationPage> {
           ),
         ],
       ),
-      // bottomnavigationbar that call the
-      // SlidingClippedNavBar widget
       bottomNavigationBar: SlidingClippedNavBar(
-
         backgroundColor: Colors.white,
-        // change the page of the
-        // body by click on tab
         onButtonPressed: changePage,
-        // size of the icons of the tab
         iconSize: 24,
         fontWeight: FontWeight.w400,
         activeColor: Theme.of(context).primaryColor,
-        // color of tab otherthan
-        // of selected tab
         inactiveColor: Colors.black54,
-        // selected tab that point
-        // the index of the tab
         selectedIndex: selectedIndex,
-        // items of the navigation bar
         barItems: <BarItem>[
           BarItem(
             icon: Iconsax.home,

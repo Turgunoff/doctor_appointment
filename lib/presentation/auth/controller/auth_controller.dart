@@ -21,13 +21,13 @@ class AuthController extends GetxController {
         Get.offAndToNamed(AppRoutes.navigationPage); // Use Get.offAll to navigate without back button
       } else {
         // If user is signed out, navigate to sign-in screen
-        Get.offAndToNamed(AppRoutes.signInScreen); // Use Get.offAll to navigate without back button
+        Get.offAndToNamed(AppRoutes.logInScreen); // Use Get.offAll to navigate without back button
       }
     });
   }
 
   void onSignOut() async {
     await _auth.signOut();
-    Get.offAllNamed(AppRoutes.signInScreen);
+    Get.offAllNamed(AppRoutes.navigationPage);
   }
 }

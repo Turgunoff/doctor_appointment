@@ -3,9 +3,10 @@
 // @Date: 30.01.2024
 //
 
+import 'package:doctor/presentation/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:get/get.dart';
 
-import '../presentation/auth/sign_in_screen/sign_in_screen.dart';
+import '../presentation/auth/log_in_screen/log_in_screen.dart';
 import '../presentation/home/bindings/home_binding.dart';
 import '../presentation/home/home_screen.dart';
 import '../presentation/navigation/navigation_bindings/navigation_binding.dart';
@@ -22,7 +23,7 @@ class AppRoutes {
   static const String myBookingScreen = '/myBookingScreen';
   static const String inboxScreen = '/inboxScreen';
   static const String profileScreen = '/profileScreen';
-  static const String signInScreen = '/signInScreen';
+  static const String logInScreen = '/logInScreen';
   static const String signUpScreen = '/signUpScreen';
   static const String homeScreen = '/homeScreen';
   static const String exploreScreen = '/exploreScreen';
@@ -33,43 +34,23 @@ class AppRoutes {
     GetPage(
       name: initialRoute,
       page: () => const SplashScreen(),
-      bindings: [
-        SplashBinding(),
-      ],
+      bindings: [SplashBinding()],
     ),
     GetPage(
       name: navigationPage,
-      page: () => const NavigationPage(),
-      bindings: [
-        NavigationBinding(),
-      ],
+      page: () => NavigationPage(),
+      bindings: [NavigationBinding()],
     ),
     GetPage(
       name: homeScreen,
       page: () => const HomeScreen(),
-      bindings: [
-        HomeBinding(),
-      ],
+      bindings: [HomeBinding()],
     ),
-    GetPage(
-      name: exploreScreen,
-      page: () => const ExploreScreen(),
-    ),
-    GetPage(
-      name: myBookingScreen,
-      page: () => const MyBookingScreen(),
-    ),
-    GetPage(
-      name: inboxScreen,
-      page: () => const InboxScreen(),
-    ),
-    GetPage(
-      name: profileScreen,
-      page: () => ProfileScreen(),
-    ),
-    GetPage(
-      name: signInScreen,
-      page: () => SignInScreen(),
-    ),
+    GetPage(name: exploreScreen, page: () => const ExploreScreen()),
+    GetPage(name: myBookingScreen, page: () => const MyBookingScreen()),
+    GetPage(name: inboxScreen, page: () => const InboxScreen()),
+    GetPage(name: profileScreen, page: () => ProfileScreen()),
+    GetPage(name: logInScreen, page: () => LogInScreen()),
+    GetPage(name: signUpScreen, page: () => SignUpScreen()),
   ];
 }
