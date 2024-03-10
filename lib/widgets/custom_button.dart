@@ -11,12 +11,16 @@ class CustomButton extends StatelessWidget {
   final String textButton;
   final VoidCallback onPressed;
   final Color color;
+  final double height;
+  final double width;
 
   const CustomButton({
     super.key,
     required this.textButton,
     required this.onPressed,
     this.color = const Color(0xFF0EBE7E),
+    required this.height,
+    required this.width,
   });
 
   @override
@@ -24,8 +28,8 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        height: 50,
-        width: double.infinity,
+        height: height,
+        width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: color,

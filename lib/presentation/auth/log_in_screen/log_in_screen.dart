@@ -52,6 +52,8 @@ class LogInScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               CustomButton(
+                height: 50,
+                width: double.infinity,
                 textButton: 'Log In',
                 onPressed: () {
                   logInController.signInWithEmailAndPassword();

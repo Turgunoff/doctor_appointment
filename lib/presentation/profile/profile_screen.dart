@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,10 +10,12 @@ import 'controller/profile_controller.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
+  final controller = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      builder: (controller) {
+      builder: (ctx) {
         if (controller.user != null) {
           return Scaffold(
             appBar: AppBar(
@@ -22,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {
                     controller.logOut();
                   },
-                  icon: Icon(Iconsax.logout),
+                  icon: const Icon(Iconsax.logout),
                 ),
               ],
             ),
@@ -48,6 +51,8 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed(AppRoutes.logInScreen);
                   },
+                  height: 50,
+                  width: double.infinity,
                 ),
               ),
             ),

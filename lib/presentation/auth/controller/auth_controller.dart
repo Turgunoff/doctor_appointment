@@ -26,8 +26,5 @@ class AuthController extends GetxController {
     });
   }
 
-  void onSignOut() async {
-    await _auth.signOut();
-    Get.offAllNamed(AppRoutes.navigationPage);
-  }
+
 }

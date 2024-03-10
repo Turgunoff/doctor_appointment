@@ -5,6 +5,7 @@
 
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/widgets/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,23 +13,31 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../../routes/app_routes.dart';
+import '../../auth/models/userModel.dart';
 
 class ProfileController extends GetxController {
-
-  final box = GetStorage();
-  var selectedLanguage = 'en_US'.obs;
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? user;
 
   @override
   void onInit() {
     super.onInit();
-    _loadLanguage();
-
     user = _auth.currentUser;
   }
 
+  Future<UserModel?> getUserData() async {
+    final DocumentSnapshot<Map<String, dynamic>> userDoc =
+        await FirebaseFirestore.instance
+            .collection('userDoctors')
+            .doc(user!.uid)
+            .get();
+
+  }
+
+
+
+  /*final box = GetStorage();
+  var selectedLanguage = 'en_US'.obs;
   void _loadLanguage() {
     if (box.hasData('language')) {
       selectedLanguage(box.read('language'));
@@ -41,7 +50,7 @@ class ProfileController extends GetxController {
     Get.updateLocale(
         Locale(languageCode.split('_')[0], languageCode.split('_')[1]));
     Get.back();
-  }
+  }*/
 
   void logOut() {
     Get.defaultDialog(
@@ -51,6 +60,8 @@ class ProfileController extends GetxController {
       cancelTextColor: Colors.black,
       buttonColor: Colors.red,
       confirm: CustomButton(
+          height: 50,
+          width: double.infinity,
           textButton: 'Yes',
           color: Colors.red,
           onPressed: () {
@@ -58,6 +69,8 @@ class ProfileController extends GetxController {
             Get.offAllNamed(AppRoutes.navigationPage);
           }),
       cancel: CustomButton(
+        height: 50,
+        width: double.infinity,
         textButton: 'Cancel',
         onPressed: () {
           Get.back();
