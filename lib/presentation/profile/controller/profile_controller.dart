@@ -14,6 +14,7 @@ import 'package:get_storage/get_storage.dart';
 import '../../../routes/app_routes.dart';
 
 class ProfileController extends GetxController {
+
   final box = GetStorage();
   var selectedLanguage = 'en_US'.obs;
 
