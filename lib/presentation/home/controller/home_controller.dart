@@ -3,45 +3,64 @@
 // @Date: 30.01.2024
 //
 
-import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../models/category_model.dart';
+import '../../auth/models/userModel.dart';
 
 class HomeController extends GetxController {
-  RxBool isDark = false.obs;
+  Rx<User?> user = Rx(null);
+  RxList<UserModel> users = RxList<UserModel>([]);
+  RxBool isLoading = true.obs;
+  RxString greeting = 'Good Morning'.obs;
 
-  final RxList<CategoryModel> categoryData = <CategoryModel>[
-    CategoryModel(categoryName: 'All', isSelected: true),
-    CategoryModel(categoryName: 'Barber', isSelected: false),
-    CategoryModel(categoryName: 'Hair', isSelected: false),
-    CategoryModel(categoryName: 'Nail', isSelected: false),
-    CategoryModel(categoryName: 'Makeup', isSelected: false),
-    CategoryModel(categoryName: 'Massage', isSelected: false),
-    CategoryModel(categoryName: 'Face', isSelected: false),
-    CategoryModel(categoryName: 'Body', isSelected: false),
-    CategoryModel(categoryName: 'Spa', isSelected: false),
-    CategoryModel(categoryName: 'Waxing', isSelected: false),
-    CategoryModel(categoryName: 'Tattoo', isSelected: false),
-    CategoryModel(categoryName: 'Piercing', isSelected: false),
-    CategoryModel(categoryName: 'Eyebrows', isSelected: false),
-    CategoryModel(categoryName: 'Eyelashes', isSelected: false),
-    CategoryModel(categoryName: 'Teeth', isSelected: false),
-    CategoryModel(categoryName: 'Tanning', isSelected: false),
-    CategoryModel(categoryName: 'Others', isSelected: false),
-  ].obs;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void changeTheme() {
-    isDark.value = !isDark.value;
-    Get.changeTheme(
-      isDark.value ? ThemeData.dark() : ThemeData.light(),
-    );
+  String getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour >= 5 && hour < 12) {
+      return 'Good Morning';
+    } else if (hour >= 12 && hour < 17) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
   }
 
-  void selectCategory(int index) {
-    for (int i = 0; i < categoryData.length; i++) {
-      categoryData[i].isSelected.value = i == index;
-      update();
+  @override
+  void onInit() {
+    super.onInit();
+    user.bindStream(_auth.authStateChanges()); // Stream for auth state
+    fetchUsers(); // Optionally fetch users on initialization
+    _updateGreeting();
+    Timer.periodic(const Duration(minutes: 1), (_) => _updateGreeting());
+  }
+
+  void _updateGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour >= 5 && hour < 12) {
+      greeting.value = 'Good Morning';
+    } else if (hour >= 12 && hour < 17) {
+      greeting.value = 'Good Afternoon';
+    } else {
+      greeting.value = 'Good Evening';
+    }
+  }
+
+  Future<void> fetchUsers() async {
+    try {
+      final usersQuery =
+          await FirebaseFirestore.instance.collection('userDoctors').get();
+
+      users.value =
+          usersQuery.docs.map((doc) => UserModel.fromFirestore(doc)).toList();
+    } catch (e) {
+      print('Error fetching users: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
 }

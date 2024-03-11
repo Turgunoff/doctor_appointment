@@ -17,6 +17,7 @@ import '../presentation/explore_screen/explore_screen.dart';
 import '../presentation/my_booking_screen/my_booking_screen.dart';
 import '../presentation/navigation/navigation_page.dart';
 import '../presentation/profile/profile_screen.dart';
+import '../presentation/user_details_screen/user_details_screen.dart';
 
 class AppRoutes {
   static const String splashScreen = '/splash_screen';
@@ -29,6 +30,7 @@ class AppRoutes {
   static const String exploreScreen = '/exploreScreen';
   static const String navigationPage = '/navigationPage';
   static const String initialRoute = '/splashScreen';
+  static const String userDetailsScreen = '/userDetailsScreen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -43,7 +45,7 @@ class AppRoutes {
     ),
     GetPage(
       name: homeScreen,
-      page: () => const HomeScreen(),
+      page: () => HomeScreen(),
       bindings: [HomeBinding()],
     ),
     GetPage(name: exploreScreen, page: () => const ExploreScreen()),
@@ -52,5 +54,7 @@ class AppRoutes {
     GetPage(name: profileScreen, page: () => ProfileScreen()),
     GetPage(name: logInScreen, page: () => LogInScreen()),
     GetPage(name: signUpScreen, page: () => SignUpScreen()),
+    GetPage(name: userDetailsScreen, page: ()=> const UserDetailsScreen()),
+
   ];
 }

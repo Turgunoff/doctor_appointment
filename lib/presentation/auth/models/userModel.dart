@@ -12,8 +12,9 @@ class UserModel {
   final String userType;
   final Timestamp createdAt;
   // Add more fields as needed:
-  String? name;
+  String? userName;
   String? photoURL;
+  String? userSex;
 
   UserModel({
     required this.uid,
@@ -21,8 +22,9 @@ class UserModel {
     required this.password,
     required this.userType,
     required this.createdAt,
-    this.name,
+    this.userName,
     this.photoURL,
+    this.userSex,
   });
 
   // Method to convert Firestore data to UserModel
@@ -34,8 +36,9 @@ class UserModel {
       password: data['password'],
       userType: data['userType'],
       createdAt: data['createdAt'],
-      name: data['name'],
+      userName: data['userName'],
       photoURL: data['photoURL'],
+      userSex: data['userSex'],
     );
   }
 }

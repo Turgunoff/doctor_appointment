@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
