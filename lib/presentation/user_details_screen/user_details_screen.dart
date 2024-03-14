@@ -48,6 +48,7 @@ class UserDetailsScreen extends StatelessWidget {
                 color: Colors.white,
                 height: 1400,
                 child: const Column(
+
                   children: [
                     Text('Jenifer', style: TextStyle(fontSize: 24)),
                   ],
