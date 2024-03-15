@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:doctor/routes/app_routes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -13,33 +16,50 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Obx(
-          () => Text(controller.greeting.value),
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              color: Colors.white.withAlpha(100),
+            ),
+          ),
         ),
+        elevation: 0,
+        backgroundColor: Colors.white.withAlpha(100),
+        title: Obx(() => Text(controller.greeting.value)),
         actions: [
-          Stack(
+          Row(
             children: [
               IconButton(
-                icon: const Icon(Iconsax.notification),
-                onPressed: () {
-                  Get.toNamed(AppRoutes.userDetailsScreen);
-                },
+                icon: const Icon(Iconsax.search_normal_1),
+                onPressed: () {},
               ),
-              Positioned(
-                left: 12,
-                bottom: 12,
-                child: Container(
-                  padding: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(6),
+              Stack(
+                children: [
+                  IconButton(
+                    icon: const Icon(Iconsax.notification),
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.userDetailsScreen);
+                    },
                   ),
-                  constraints: const BoxConstraints(
-                    minWidth: 10,
-                    minHeight: 10,
+                  Positioned(
+                    left: 12,
+                    bottom: 12,
+                    child: Container(
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 10,
+                        minHeight: 10,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
@@ -52,50 +72,54 @@ class HomeScreen extends StatelessWidget {
           return const Center(child: Text('No users found'));
         } else {
           return SingleChildScrollView(
+            padding: const EdgeInsets.only(top: 100),
             child: Column(
               children: [
                 //search doctors and hospitals
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(12),
-                      hintText: 'Search doctors',
-                      prefixIcon: const Icon(Iconsax.search_normal_1),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 2),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor, width: 2),
-                      ),
-                      prefixIconColor: Colors.grey[600],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                //beautiful carousel slider for hospitals and news
+                // Padding(
+                //   padding: const EdgeInsets.all(16.0),
+                //   child: TextField(
+                //     decoration: InputDecoration(
+                //       contentPadding: const EdgeInsets.all(12),
+                //       hintText: 'Search doctors',
+                //       prefixIcon: const Icon(Iconsax.search_normal_1),
+                //       enabledBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(6),
+                //         borderSide:
+                //             const BorderSide(color: Colors.grey, width: 2),
+                //       ),
+                //       focusedBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(6),
+                //         borderSide: BorderSide(
+                //             color: Theme.of(context).primaryColor, width: 2),
+                //       ),
+                //       prefixIconColor: Colors.grey[600],
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(height: 16),
+                //beautiful carousel slider for hospitals and news with pageview
                 Container(
-                  height: 200,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
+                  height: 150,
+                  child: PageView.builder(
                     itemCount: 5,
+                    pageSnapping: true,
                     itemBuilder: (context, index) {
                       return Container(
-                        margin: const EdgeInsets.only(right: 16),
-                        width: 300,
+                        margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Colors.grey,
+                          image: const DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              'https://i.pinimg.com/originals/46/5a/f1/465af15f6684b1ea0d799fda31c951e3.jpg',
+                            ),
+                          ),
                         ),
                       );
                     },
                   ),
                 ),
-
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: controller.users.length,
@@ -118,6 +142,10 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
+                Container(
+                  height: 1000,
+                  color: Colors.grey[600],
+                )
               ],
             ),
           );
