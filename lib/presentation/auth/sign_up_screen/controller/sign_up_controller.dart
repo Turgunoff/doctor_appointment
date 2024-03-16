@@ -59,6 +59,11 @@ class SignUpController extends GetxController {
       } else {
         // Handle unexpected UserType (error or future expansion)
       }
+      await _firestore
+          .collection('userTypes')
+          .doc(userCredential.user!.uid)
+          .set({'userType': userType.toString().split('.').last});
+
       Get.offAllNamed(AppRoutes.navigationPage);
       Get.snackbar(
         'Success',
