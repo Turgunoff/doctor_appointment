@@ -3,6 +3,7 @@
 // @Date: 30.01.2024
 //
 
+import 'package:doctor/presentation/my_booking_screen/my_booking_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
@@ -49,39 +50,51 @@ class _NavigationPageState extends State<NavigationPage> {
               children: [
                 HomeScreen(),
                 ExploreScreen(),
-                InboxScreen(),
+                MyBookingScreen(),
                 ProfileScreen(),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: SlidingClippedNavBar(
-        backgroundColor: Colors.white,
-        onButtonPressed: changePage,
-        iconSize: 24,
-        fontWeight: FontWeight.w400,
-        activeColor: Theme.of(context).primaryColor,
-        inactiveColor: Colors.black54,
-        selectedIndex: selectedIndex,
-        barItems: <BarItem>[
-          BarItem(
-            icon: Iconsax.home,
-            title: 'Home',
-          ),
-          BarItem(
-            icon: Iconsax.location,
-            title: 'Location',
-          ),
-          BarItem(
-            icon: Iconsax.message,
-            title: 'Inbox',
-          ),
-          BarItem(
-            icon: Iconsax.profile_circle,
-            title: 'Profile',
-          ),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              spreadRadius: 1,
+            ),
+          ],
+        ),
+        child: SlidingClippedNavBar(
+          backgroundColor: Colors.white,
+          onButtonPressed: changePage,
+          iconSize: 24,
+          fontWeight: FontWeight.w400,
+          activeColor: Theme.of(context).primaryColor,
+          inactiveColor: Colors.black54,
+          selectedIndex: selectedIndex,
+          fontSize: 16,
+          barItems: <BarItem>[
+            BarItem(
+              icon: Iconsax.home,
+              title: 'Home',
+            ),
+            BarItem(
+              icon: Iconsax.location,
+              title: 'Location',
+            ),
+            BarItem(
+              icon: Iconsax.calendar,
+              title: 'Booking',
+            ),
+            BarItem(
+              icon: Iconsax.profile_circle,
+              title: 'Profile',
+            ),
+          ],
+        ),
       ),
     );
   }

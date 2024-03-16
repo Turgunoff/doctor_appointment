@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
+import '../models/signUpModel.dart';
 
 enum UserType {
   client,
@@ -16,6 +17,9 @@ enum UserType {
 }
 
 class SignUpController extends GetxController {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   UserType? userType;
@@ -25,52 +29,44 @@ class SignUpController extends GetxController {
     update();
   }
 
-  Future<void> signUp() async {
+  Future<void> signUp(String email, String password, UserType userType) async {
     try {
-      final userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
+      // Authentication
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
 
-      final user = userCredential.user;
+      // Firestore Insertion
+      final signUpModel = SignUpModel(
+        uid: userCredential.user!.uid,
+        email: email,
+        userType: userType.toString().split('.').last,
+        createdAt: Timestamp.now(),
+      );
 
-      if (user != null) {
-        // Add user to Firebase Firestore based on user type
-        if (userType == UserType.client) {
-          // Add client to Firebase Firestore
-          await FirebaseFirestore.instance
-              .collection('userClients')
-              .doc(user.uid)
-              .set({
-            'uid' : user.uid,
-            'email': user.email,
-            'password': passwordController.text.trim(),
-            'userType': userType.toString().split('.').last,
-            'createdAt': Timestamp.fromDate(DateTime.now()),
-          });
-        } else if (userType == UserType.doctor) {
-          // Add doctor to Firebase Firestore
-          await FirebaseFirestore.instance
-              .collection('userDoctors')
-              .doc(user.uid)
-              .set({
-            'uid' : user.uid,
-            'email': user.email,
-            'password': passwordController.text.trim(),
-            'userType': userType.toString().split('.').last,
-            'createdAt': Timestamp.fromDate(DateTime.now()),
-          });
-        }
-        Get.offAllNamed(AppRoutes.navigationPage);
-        Get.snackbar(
-          'Success',
-          'User created successfully',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green.shade400,
-          colorText: Colors.white,
-        );
+      // Conditional Save
+      if (userType == UserType.client) {
+        await _firestore
+            .collection('userClients')
+            .doc(userCredential.user!.uid)
+            .set(signUpModel.toMap()); // Assuming you add toMap()
+      } else if (userType == UserType.doctor) {
+        await _firestore
+            .collection('userDoctors')
+            .doc(userCredential.user!.uid)
+            .set(signUpModel.toMap());
+      } else {
+        // Handle unexpected UserType (error or future expansion)
       }
+      Get.offAllNamed(AppRoutes.navigationPage);
+      Get.snackbar(
+        'Success',
+        'User created successfully',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green.shade400,
+        colorText: Colors.white,
+      );
     } on FirebaseAuthException catch (e) {
       Get.snackbar(
         colorText: Colors.white,

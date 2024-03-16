@@ -184,7 +184,11 @@ class SignUpNext extends StatelessWidget {
               CustomButton(
                 textButton: 'Sign Up',
                 onPressed: () {
-                  signUpController.signUp();
+                  signUpController.signUp(
+                    signUpController.emailController.text,
+                    signUpController.passwordController.text,
+                    signUpController.userType!,
+                  );
                 },
                 width: MediaQuery.of(context).size.width * 0.8,
                 height: 50,

@@ -5,40 +5,35 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserModel {
+class SignUpModel {
   final String uid;
   final String email;
-  final String password;
   final String userType;
   final Timestamp createdAt;
-  // Add more fields as needed:
-  String? userName;
-  String? photoURL;
-  String? userSex;
 
-  UserModel({
+  SignUpModel({
     required this.uid,
     required this.email,
-    required this.password,
     required this.userType,
     required this.createdAt,
-    this.userName,
-    this.photoURL,
-    this.userSex,
   });
 
   // Method to convert Firestore data to UserModel
-  factory UserModel.fromFirestore(DocumentSnapshot doc) {
+  factory SignUpModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return UserModel(
+    return SignUpModel(
       uid: data['uid'],
       email: data['email'],
-      password: data['password'],
       userType: data['userType'],
       createdAt: data['createdAt'],
-      userName: data['userName'],
-      photoURL: data['photoURL'],
-      userSex: data['userSex'],
     );
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'email': email,
+      'userType': userType,
+      'createdAt': createdAt,
+    };
   }
 }

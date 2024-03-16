@@ -5,12 +5,14 @@
 
 import 'dart:ui';
 
-import 'package:doctor/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../book_appointment_screen/book_appointment_screen.dart';
+import '../home/models/doctors.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   const UserDetailsScreen({super.key});
@@ -30,6 +32,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Doctor doctor = Get.arguments as Doctor;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -64,15 +67,23 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
             physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 100, left: 20, right: 20, bottom: 80),
+                  top: 110, left: 20, right: 20, bottom: 80),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Card(
-                    color: Colors.white,
-                    shadowColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0, 3), // Change the offset as needed
+                          blurRadius: 6, // Adjust the blur radius as needed
+                          spreadRadius: 0, // Adjust the spread radius as needed
+                        ),
+                      ],
+                    ),
                     child: Row(
                       children: [
                         Padding(
@@ -130,8 +141,19 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Card(
-                    color: Colors.white,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 6, // Adjust the blur radius as needed
+                          spreadRadius: 0, // Adjust the spread radius as needed
+                          offset: Offset(0, 3), // Adjust the offset as needed
+                        ),
+                      ],
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Row(
@@ -141,7 +163,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                color: const Color(0xffCBCBCB),
+                                color: const Color(0xffF9F9F9),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Column(
@@ -172,7 +194,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                color: const Color(0xffCBCBCB),
+                                color: const Color(0xffF9F9F9),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Column(
@@ -202,7 +224,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                color: const Color(0xffCBCBCB),
+                                color: const Color(0xffF9F9F9),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Column(
@@ -264,7 +286,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.blue,
-                            decoration: TextDecoration.underline,
                           ),
                         ),
                       ),
@@ -311,12 +332,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             onTap: () {
                               // Go to all reviews screen
                             },
-                            child: Text(
+                            child: const Text(
                               'See all',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.blue,
-                                decoration: TextDecoration.underline,
                               ),
                             ),
                           ),
@@ -324,64 +344,61 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       ),
                       const SizedBox(height: 10),
                       //Review Card
-                      Card(
-                        color: Colors.white,
-                        shadowColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: Image.network(
-                                      height: 50,
-                                      width: 50,
-                                      fit: BoxFit.cover,
-                                      'https://i.pinimg.com/originals/46/5a/f1/465af15f6684b1ea0d799fda31c951e3.jpg',
-                                    ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.network(
+                                    height: 50,
+                                    width: 50,
+                                    fit: BoxFit.cover,
+                                    'https://i.pinimg.com/originals/46/5a/f1/465af15f6684b1ea0d799fda31c951e3.jpg',
                                   ),
-                                  const SizedBox(width: 10),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'John Doe',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        '5.0',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.grey.shade800,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                'Dr. John Doe is a Cardiologist in New York, USA. He has 10 years of experience in this field. He has done his MBBS from New York Medical College and MD from New York Medical College. He is a member of the American College of Cardiology (ACC). Some of the services provided by the doctor are: Cardiac Ablation, Cardiac Catheterization, Cardiac MRI, Cardioversion, and Cardiac Procedure etc.',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey.shade800,
                                 ),
-                                maxLines: 3, // Limit to 3 lines
-                                overflow: TextOverflow
-                                    .clip, // Add ellipsis for overflow
+                                const SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'John Doe',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '5.0',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey.shade800,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'Dr. John Doe is a Cardiologist in New York, USA. He has 10 years of experience in this field. He has done his MBBS from New York Medical College and MD from New York Medical College. He is a member of the American College of Cardiology (ACC). Some of the services provided by the doctor are: Cardiac Ablation, Cardiac Catheterization, Cardiac MRI, Cardioversion, and Cardiac Procedure etc.',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey.shade800,
                               ),
-                            ],
-                          ),
+                              maxLines: 3, // Limit to 3 lines
+                              overflow: TextOverflow
+                                  .clip, // Add ellipsis for overflow
+                            ),
+                          ],
                         ),
+                      ),
+                      Divider(
+                        color: Colors.grey.shade300,
+                        thickness: 1,
                       ),
                     ],
                   ),
@@ -394,13 +411,42 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
             right: 0,
             bottom: 0,
             child: Container(
-              height: 60, // Adjust height as needed
-              color: Colors.white, // Button background color
-              child: CustomButton(
-                textButton: 'Book Appointment',
-                onPressed: () {},
-                height: 50,
-                width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 6, // Adjust the blur radius as needed
+                    spreadRadius: 0, // Adjust the spread radius as needed
+                    offset: Offset(0, 0), // Adjust the offset as needed
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.only(
+                  top: 12, left: 20, right: 20, bottom: 12),
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(
+                    () =>  BookAppointmentScreen(),
+                    transition: Transition.rightToLeftWithFade,
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Book Appointment',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

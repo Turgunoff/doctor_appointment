@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../../routes/app_routes.dart';
-import '../../auth/models/userModel.dart';
+import '../../auth/sign_up_screen/models/signUpModel.dart';
 
 class ProfileController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -25,7 +25,7 @@ class ProfileController extends GetxController {
     user = _auth.currentUser;
   }
 
-  Future<UserModel?> getUserData() async {
+  Future<SignUpModel?> getUserData() async {
     final DocumentSnapshot<Map<String, dynamic>> userDoc =
         await FirebaseFirestore.instance
             .collection('userDoctors')

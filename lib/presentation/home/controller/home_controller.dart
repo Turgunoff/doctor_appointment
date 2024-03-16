@@ -9,35 +9,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../../auth/models/userModel.dart';
+import '../../auth/sign_up_screen/models/signUpModel.dart';
+import '../../user_details_screen/user_details_screen.dart';
+import '../models/doctors.dart';
 
 class HomeController extends GetxController {
   Rx<User?> user = Rx(null);
-  RxList<UserModel> users = RxList<UserModel>([]);
   RxBool isLoading = true.obs;
   RxString greeting = 'Good Morning'.obs;
 
+  final RxList<Doctor> popularDoctors = RxList<Doctor>([]);
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  String getGreeting() {
-    final hour = DateTime.now().hour;
-    if (hour >= 5 && hour < 12) {
-      return 'Good Morning';
-    } else if (hour >= 12 && hour < 17) {
-      return 'Good Afternoon';
-    } else {
-      return 'Good Evening';
-    }
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    user.bindStream(_auth.authStateChanges()); // Stream for auth state
-    fetchUsers(); // Optionally fetch users on initialization
-    _updateGreeting();
-    Timer.periodic(const Duration(minutes: 1), (_) => _updateGreeting());
-  }
 
   void _updateGreeting() {
     final hour = DateTime.now().hour;
@@ -50,17 +33,38 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> fetchUsers() async {
-    try {
-      final usersQuery =
-          await FirebaseFirestore.instance.collection('userDoctors').get();
+  @override
+  void onInit() {
+    super.onInit();
+    user.bindStream(_auth.authStateChanges()); // Stream for auth state
+    _updateGreeting();
+    Timer.periodic(const Duration(minutes: 1), (_) => _updateGreeting());
+    fetchPopularDoctors();
+  }
 
-      users.value =
-          usersQuery.docs.map((doc) => UserModel.fromFirestore(doc)).toList();
-    } catch (e) {
-      print('Error fetching users: $e');
-    } finally {
-      isLoading.value = false;
+  Future<void> fetchPopularDoctors() async {
+    try {
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('userDoctors')
+          .orderBy('totalRating', descending: true)
+          .limit(3)
+          .get();
+
+      final doctors = querySnapshot.docs
+          .map((doc) => Doctor.fromFirestore(doc.data()))
+          .where((doctor) => doctor.userName != null)
+          .toList();
+
+      popularDoctors.value = doctors;
+      print('Popular Doctors fetched: ${popularDoctors.length}');
+    } catch (error) {
+      print('Error fetching popular doctors: $error');
     }
+  }
+
+  void onPopularDoctorTap(int index) {
+    final Doctor doctor = popularDoctors[index];
+    Get.toNamed('/userDetailsScreen', // Named route from step 1
+        arguments: doctor);
   }
 }

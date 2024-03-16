@@ -33,6 +33,11 @@ class ThemeHelper {
       space: 0,
       thickness: 1,
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white.withAlpha(100),
+      elevation: 0,
+      centerTitle: true,
+    ),
     colorScheme: ColorScheme.fromSeed(
       seedColor: primaryColor,
       brightness: Brightness.light,
