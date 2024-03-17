@@ -18,6 +18,8 @@ class ProfileClientScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //size height and width
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -41,12 +43,93 @@ class ProfileClientScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Client: '),
-          ],
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: SizedBox(
+          width: size.width,
+          height: size.height,
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              const CircleAvatar(
+                radius: 60,
+                backgroundImage: NetworkImage(
+                  '',
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Eldor Turgunov',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              //phone number
+              Text(
+                '+998 99 999 99 99',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade700,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 20),
+              //edit profile, favorite, settings, help, logout
+              ListTile(
+                onTap: () {},
+                leading: const Icon(Iconsax.edit),
+                title: const Text('Edit Profile'),
+                trailing: const Icon(Iconsax.arrow_right_3),
+              ),
+              Divider(height: 1, color: Colors.grey.shade300),
+              ListTile(
+                onTap: () {},
+                leading: const Icon(Iconsax.heart),
+                title: const Text('Favorite'),
+                trailing: const Icon(Iconsax.arrow_right_3),
+              ),
+              Divider(height: 1, color: Colors.grey.shade300),
+              ListTile(
+                onTap: () {},
+                leading: const Icon(Iconsax.notification),
+                title: const Text('Notifications'),
+                trailing: const Icon(Iconsax.arrow_right_3),
+              ),
+              Divider(height: 1, color: Colors.grey.shade300),
+              ListTile(
+                onTap: () {},
+                leading: const Icon(Iconsax.settings),
+                title: const Text('Settings'),
+                trailing: const Icon(Iconsax.arrow_right_3),
+              ),
+              Divider(height: 1, color: Colors.grey.shade300),
+              ListTile(
+                onTap: () {},
+                leading: const Icon(Iconsax.support),
+                title: const Text('Help'),
+                trailing: const Icon(Iconsax.arrow_right_3),
+              ),
+              Divider(height: 1, color: Colors.grey.shade300),
+              ListTile(
+                onTap: () {},
+                leading: const Icon(Iconsax.security),
+                title: const Text('Terms and Conditions'),
+                trailing: const Icon(Iconsax.arrow_right_3),
+              ),
+              Divider(height: 1, color: Colors.grey.shade300),
+              ListTile(
+                onTap: () {
+                  controller.logOut();
+                },
+                leading: const Icon(Iconsax.logout, color: Colors.red),
+                title: const Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

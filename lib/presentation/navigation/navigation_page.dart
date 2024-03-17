@@ -8,9 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
 
-import '../explore_screen/explore_screen.dart';
 import '../home/home_screen.dart';
-import '../inbox_screen/inbox_screen.dart';
+import '../location_screen/location_screen.dart';
 import '../profile/profile_screen.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -49,7 +48,7 @@ class _NavigationPageState extends State<NavigationPage> {
               controller: _pageController,
               children: [
                 HomeScreen(),
-                ExploreScreen(),
+                LocationScreen(),
                 MyBookingScreen(),
                 ProfileScreen(),
               ],

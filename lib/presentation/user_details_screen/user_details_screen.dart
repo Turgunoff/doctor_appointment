@@ -32,7 +32,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Doctor doctor = Get.arguments as Doctor;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(

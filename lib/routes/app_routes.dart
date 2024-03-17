@@ -13,7 +13,7 @@ import '../presentation/navigation/navigation_bindings/navigation_binding.dart';
 import '../presentation/splash_screen/binding/splash_binding.dart';
 import '../presentation/splash_screen/splash_screen.dart';
 import '../presentation/inbox_screen/inbox_screen.dart';
-import '../presentation/explore_screen/explore_screen.dart';
+import '../presentation/location_screen/location_screen.dart';
 import '../presentation/my_booking_screen/my_booking_screen.dart';
 import '../presentation/navigation/navigation_page.dart';
 import '../presentation/profile/profile_screen.dart';
@@ -48,7 +48,7 @@ class AppRoutes {
       page: () => HomeScreen(),
       bindings: [HomeBinding()],
     ),
-    GetPage(name: exploreScreen, page: () => const ExploreScreen()),
+    GetPage(name: exploreScreen, page: () => const LocationScreen()),
     GetPage(name: myBookingScreen, page: () => const MyBookingScreen()),
     GetPage(name: inboxScreen, page: () => const InboxScreen()),
     GetPage(name: profileScreen, page: () => ProfileScreen()),
