@@ -3,12 +3,10 @@
 // @Date: 09.03.2024
 //
 
-import 'package:doctor/theme/theme_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_textField.dart';
 import 'controller/sign_up_controller.dart';
@@ -20,7 +18,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -42,7 +40,6 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print('Client');
                       signUpController.selectUserType(
                         UserType.client,
                       );
@@ -80,7 +77,6 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      print('Doctor');
                       signUpController.selectUserType(
                         UserType.doctor,
                       );
@@ -127,7 +123,7 @@ class SignUpScreen extends StatelessWidget {
                     transition: Transition.rightToLeft,
                   );
                 },
-                width: _size.width * 0.8,
+                width: size.width * 0.8,
                 height: 50,
               ),
             ],

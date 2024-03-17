@@ -1,6 +1,4 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
@@ -33,7 +31,6 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
       slots.add(
         GestureDetector(
           onTap: () {
-            print('Selected time: ${DateFormat.jm().format(startTime)}');
           },
           child: Container(
             decoration: BoxDecoration(

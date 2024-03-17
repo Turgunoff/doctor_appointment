@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../book_appointment_screen/book_appointment_screen.dart';
-import '../home/models/doctors.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   const UserDetailsScreen({super.key});

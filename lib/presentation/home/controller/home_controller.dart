@@ -9,8 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../../auth/sign_up_screen/models/signUpModel.dart';
-import '../../user_details_screen/user_details_screen.dart';
+import '../models/category_model.dart';
 import '../models/doctors.dart';
 
 class HomeController extends GetxController {
@@ -20,7 +19,10 @@ class HomeController extends GetxController {
 
   final RxList<Doctor> popularDoctors = RxList<Doctor>([]);
 
+  RxList<CategoryModel> categories = <CategoryModel>[].obs;
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void _updateGreeting() {
     final hour = DateTime.now().hour;
@@ -42,6 +44,14 @@ class HomeController extends GetxController {
     fetchPopularDoctors();
   }
 
+  @override
+  onReady() {
+    super.onReady();
+    isLoading.value = false;
+    fetchCategories();
+
+  }
+
   Future<void> fetchPopularDoctors() async {
     try {
       final querySnapshot = await FirebaseFirestore.instance
@@ -59,6 +69,17 @@ class HomeController extends GetxController {
       print('Popular Doctors fetched: ${popularDoctors.length}');
     } catch (error) {
       print('Error fetching popular doctors: $error');
+    }
+  }
+
+  Future<void> fetchCategories() async {
+    try {
+      final snapshot = await _firestore.collection('categories').get();
+      categories.value = snapshot.docs
+          .map((doc) => CategoryModel.fromFirestore(doc.data()))
+          .toList();
+    } catch (e) {
+      // Handle error (e.g., display a snackbar)
     }
   }
 

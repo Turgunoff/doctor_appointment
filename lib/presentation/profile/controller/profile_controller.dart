@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../routes/app_routes.dart';
-import '../../auth/sign_up_screen/models/signUpModel.dart';
+import '../../auth/sign_up_screen/models/sign_up_model.dart';
 
 class ProfileController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;

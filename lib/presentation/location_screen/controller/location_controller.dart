@@ -6,7 +6,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../../../services/yandex_map_service.dart';
 
@@ -28,13 +27,10 @@ class LocationController extends GetxController {
   }
 
   Future<void> _fetchCurrentLocation() async {
-    const defLocation = TashkentLocation();
     try {
       final location = await _locationService.getCurrentLocation();
       currentLocation.value = location;
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 
   void updateCurrentLocation() async {
@@ -45,6 +41,7 @@ class LocationController extends GetxController {
       // Handle error
     }
   }
+
   void setDefaultLocation() {
     currentLocation.value = const TashkentLocation();
   }
