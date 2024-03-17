@@ -8,23 +8,40 @@ import 'dart:ui';
 
 import 'package:doctor/services/yandex_map_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
+import 'controller/location_controller.dart';
+
 class LocationScreen extends StatefulWidget {
-  const LocationScreen({super.key});
+  LocationScreen({super.key});
 
   @override
   State<LocationScreen> createState() => _LocationScreenState();
 }
 
-class _LocationScreenState extends State<LocationScreen> {
+class _LocationScreenState extends State<LocationScreen>
+    with AutomaticKeepAliveClientMixin {
   final mapControllerCompleter = Completer<YandexMapController>();
+  final _locationController = Get.put(LocationController());
+
+  Future<void> _moveToCurrentLocation(AppLatLong appLatLong) async {
+    (await mapControllerCompleter.future).moveCamera(
+      animation: const MapAnimation(type: MapAnimationType.smooth, duration: 3),
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: Point(
+            latitude: appLatLong.lat,
+            longitude: appLatLong.long,
+          ),
+          zoom: 14,
+        ),
+      ),
+    );
+  }
 
   @override
-  void initState() {
-    super.initState();
-    _initPermission().ignore();
-  }
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -46,43 +63,32 @@ class _LocationScreenState extends State<LocationScreen> {
         title: const Text('Doctor Details'),
         centerTitle: true,
       ),
-      body: YandexMap(
-        onMapCreated: (controller) {
-          mapControllerCompleter.complete(controller);
-        },
-      ),
-    );
-  }
-
-  Future<void> _initPermission() async {
-    if (!await LocationService().checkPermission()) {
-      await LocationService().requestPermission();
-    }
-    await _fetchCurrentLocation();
-  }
-
-  Future<void> _fetchCurrentLocation() async {
-    AppLatLong location;
-    const defaultLocation = TashkentLocation();
-    try {
-      location = await LocationService().getCurrentLocation();
-    } catch (e) {
-      location = defaultLocation;
-    }
-    _moveToCurrentLocation(location);
-  }
-
-  Future<void> _moveToCurrentLocation(AppLatLong appLatLong) async {
-    (await mapControllerCompleter.future).moveCamera(
-      animation: const MapAnimation(type: MapAnimationType.smooth, duration: 5),
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: Point(
-            latitude: appLatLong.lat,
-            longitude: appLatLong.long,
+      body: Stack(
+        children: [
+          YandexMap(
+            onMapCreated: (controller) {
+              mapControllerCompleter.complete(controller);
+              _locationController.setDefaultLocation();
+            },
           ),
-          zoom: 12,
-        ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: () => _moveToCurrentLocation(
+                  _locationController.currentLocation.value),
+              backgroundColor: Colors.white,
+              child: const Icon(Icons.my_location),
+            ),
+          ),
+          const Center(
+            child: Icon(
+              Icons.location_on,
+              size: 36,
+              color: Colors.red,
+            ),
+          ),
+        ],
       ),
     );
   }

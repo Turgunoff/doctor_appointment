@@ -6,13 +6,10 @@
 import 'package:geolocator/geolocator.dart';
 
 abstract class AppLocation {
-  //getCurrentLocation
   Future<AppLatLong> getCurrentLocation();
 
-  //requestPermission
   Future<bool> requestPermission();
 
-  //checkPermission
   Future<bool> checkPermission();
 }
 

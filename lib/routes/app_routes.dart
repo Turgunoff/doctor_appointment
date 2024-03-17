@@ -48,13 +48,12 @@ class AppRoutes {
       page: () => HomeScreen(),
       bindings: [HomeBinding()],
     ),
-    GetPage(name: exploreScreen, page: () => const LocationScreen()),
-    GetPage(name: myBookingScreen, page: () => const MyBookingScreen()),
-    GetPage(name: inboxScreen, page: () => const InboxScreen()),
+    GetPage(name: exploreScreen, page: () => LocationScreen()),
+    GetPage(name: myBookingScreen, page: () => MyBookingScreen()),
+    GetPage(name: inboxScreen, page: () => InboxScreen()),
     GetPage(name: profileScreen, page: () => ProfileScreen()),
     GetPage(name: logInScreen, page: () => LogInScreen()),
     GetPage(name: signUpScreen, page: () => SignUpScreen()),
-    GetPage(name: userDetailsScreen, page: ()=> const UserDetailsScreen()),
-
+    GetPage(name: userDetailsScreen, page: () => UserDetailsScreen()),
   ];
 }
