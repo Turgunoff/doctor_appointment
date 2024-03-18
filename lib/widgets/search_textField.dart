@@ -3,6 +3,7 @@
 // @Date: 18.03.2024
 //
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -26,18 +27,25 @@ class SearchTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
-          const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Icon(
-                Iconsax.search_normal_1,
-                size: 18,
-              )),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Icon(
+              Iconsax.search_normal_1,
+              color: Colors.grey.shade700,
+              size: 24,
+            ),
+          ),
           Expanded(
             child: TextField(
+              maxLines: 1,
               controller: searchController!,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "Dentist",
+                hintText: "Search Doctors",
+                hintStyle: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400),
               ),
             ),
           ),
@@ -45,9 +53,9 @@ class SearchTextField extends StatelessWidget {
             onPressed: () {
               searchController!.clear();
             },
-            icon: const Icon(
-              Icons.close,
-              color: Colors.black,
+            icon: Icon(
+              CupertinoIcons.clear,
+              color: Colors.grey.shade700,
               size: 24,
             ),
           )
