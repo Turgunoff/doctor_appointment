@@ -5,6 +5,6 @@
 
 import 'package:get/get.dart';
 
-class UserDetailsScreenController extends GetxController {
+class DoctorDetailsScreenController extends GetxController {
 
 }

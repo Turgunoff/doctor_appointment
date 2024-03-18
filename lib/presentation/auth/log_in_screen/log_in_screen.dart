@@ -18,71 +18,87 @@ class LogInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Iconsax.arrow_left),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-      ),
-      body: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-              const Text(
-                'Log In',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                hintText: 'Email',
-                prefixIcon: Iconsax.message,
-                controller: logInController.emailController,
-              ),
-              const SizedBox(height: 10),
-              CustomTextField(
-                hintText: 'Password',
-                prefixIcon: Iconsax.lock,
-                controller: logInController.passwordController,
-              ),
-              const SizedBox(height: 10),
-              CustomButton(
-                height: 50,
-                width: double.infinity,
-                textButton: 'Log In',
-                onPressed: () {
-                  logInController.signInWithEmailAndPassword();
-                },
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Don\'t have an account?'),
-                  TextButton(
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.signUpScreen);
-                    },
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize:
-                            Theme.of(context).textTheme.bodyMedium?.fontSize,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+    //width and height of the screen
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return Stack(
+      children: [
+        SizedBox(
+          width: width,
+          height: height,
+          child: Image.asset(
+            'assets/images/back.png',
+            fit: BoxFit.cover,
           ),
         ),
-      ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.white.withOpacity(0.0),
+            leading: IconButton(
+              icon: const Icon(Iconsax.arrow_left_2),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                const Text(
+                  'Log In',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
+                CustomTextField(
+                  hintText: 'Email',
+                  prefixIcon: Iconsax.message,
+                  controller: logInController.emailController,
+                ),
+                const SizedBox(height: 10),
+                CustomTextField(
+                  hintText: 'Password',
+                  prefixIcon: Iconsax.lock,
+                  controller: logInController.passwordController,
+                ),
+                const SizedBox(height: 10),
+                CustomButton(
+                  height: 50,
+                  width: double.infinity,
+                  textButton: 'Log In',
+                  onPressed: () {
+                    logInController.signInWithEmailAndPassword();
+                  },
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Don\'t have an account?'),
+                    TextButton(
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.signUpScreen);
+                      },
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.fontSize,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
