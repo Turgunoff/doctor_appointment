@@ -27,6 +27,7 @@ class ThemeHelper {
     useMaterial3: true,
     primaryColor: primaryColor,
     textTheme: _textTheme,
+    fontFamily: 'Roboto',
     scaffoldBackgroundColor: Colors.white,
     dividerTheme: DividerThemeData(
       color: Colors.grey.withOpacity(0.1),
