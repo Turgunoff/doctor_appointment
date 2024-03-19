@@ -34,8 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Text(
-          'lbl_app_name'.tr,
-          style: Theme.of(context).textTheme.headline1,
+          'Doctor App',
+          style: Theme.of(context).textTheme.headlineLarge,
         )
       ),
     );

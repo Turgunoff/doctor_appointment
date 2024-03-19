@@ -57,11 +57,12 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   Widget build(BuildContext context) {
     //width and height of the screen
     final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         SizedBox(
-          width: double.infinity,
-          height: double.infinity,
+          width: width,
+          height: height,
           child: Image.asset(
             'assets/images/back.png',
             fit: BoxFit.cover,
@@ -131,6 +132,24 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                             ],
                           ),
                           child: TableCalendar(
+                            calendarStyle: CalendarStyle(
+                              todayDecoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                shape: BoxShape.circle,
+                              ),
+                              selectedDecoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                shape: BoxShape.circle,
+                              ),
+                              todayTextStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              selectedTextStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             availableCalendarFormats: const {
                               CalendarFormat.month: 'Month',
                             },
@@ -150,8 +169,8 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            firstDay: DateTime.utc(
-                                2023, 1, 1), // Start calendar from Sunday
+                            firstDay:
+                                DateTime.now(), // Start calendar from Sunday
                             lastDay: DateTime.utc(2050, 12, 31),
                             focusedDay: _focusedDay,
                             selectedDayPredicate: (day) =>

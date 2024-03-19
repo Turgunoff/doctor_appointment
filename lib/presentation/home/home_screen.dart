@@ -101,11 +101,16 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(
-                        'See all',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w400,
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.searchDoctorsScreen);
+                        },
+                        child: Text(
+                          'See all',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ],
