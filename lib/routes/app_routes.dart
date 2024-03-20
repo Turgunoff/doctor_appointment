@@ -3,11 +3,12 @@
 // @Date: 30.01.2024
 //
 
-import 'package:doctor/presentation/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:get/get.dart';
 
+import '../presentation/auth/sign_up_screen/sign_up_screen.dart';
 import '../presentation/auth/log_in_screen/log_in_screen.dart';
 import '../presentation/doctor_details_screen/doctor_details_screen.dart';
+import '../presentation/edit_profile_screen/edit_profile_screen.dart';
 import '../presentation/home/bindings/home_binding.dart';
 import '../presentation/home/home_screen.dart';
 import '../presentation/navigation/navigation_bindings/navigation_binding.dart';
@@ -18,7 +19,7 @@ import '../presentation/inbox_screen/inbox_screen.dart';
 import '../presentation/location_screen/location_screen.dart';
 import '../presentation/my_booking_screen/my_booking_screen.dart';
 import '../presentation/navigation/navigation_page.dart';
-import '../presentation/profile/profile_screen.dart';
+import '../presentation/profile/profile_doctor_screen.dart';
 
 class AppRoutes {
   static const String splashScreen = '/splash_screen';
@@ -33,6 +34,7 @@ class AppRoutes {
   static const String initialRoute = '/splashScreen';
   static const String doctorDetailsScreen = '/userDetailsScreen';
   static const String searchDoctorsScreen = '/searchDoctors';
+  static const String editProfileScreen = '/editProfileScreen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -42,7 +44,7 @@ class AppRoutes {
     ),
     GetPage(
       name: navigationPage,
-      page: () => NavigationPage(),
+      page: () => const NavigationPage(),
       bindings: [NavigationBinding()],
     ),
     GetPage(
@@ -53,10 +55,11 @@ class AppRoutes {
     GetPage(name: exploreScreen, page: () => LocationScreen()),
     GetPage(name: myBookingScreen, page: () => MyBookingScreen()),
     GetPage(name: inboxScreen, page: () => InboxScreen()),
-    GetPage(name: profileScreen, page: () => ProfileScreen()),
+    GetPage(name: profileScreen, page: () => ProfileDoctorScreen()),
     GetPage(name: logInScreen, page: () => LogInScreen()),
     GetPage(name: signUpScreen, page: () => SignUpScreen()),
     GetPage(name: doctorDetailsScreen, page: () => DoctorDetailsScreen()),
     GetPage(name: searchDoctorsScreen, page: () => SearchDoctorsScreen()),
+    GetPage(name: editProfileScreen, page: () => EditProfileScreen()),
   ];
 }

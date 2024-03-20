@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:doctor/presentation/edit_profile_screen/edit_profile_screen.dart';
 import 'package:doctor/presentation/profile/profile_client_screen.dart';
 import 'package:doctor/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,8 +11,8 @@ import 'package:iconsax/iconsax.dart';
 import '../../widgets/custom_button.dart';
 import 'controller/profile_controller.dart';
 
-class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
+class ProfileDoctorScreen extends StatelessWidget {
+  ProfileDoctorScreen({super.key});
 
   final controller = Get.put(ProfileController());
 
@@ -31,8 +32,9 @@ class ProfileScreen extends StatelessWidget {
         ),
         GetBuilder<ProfileController>(
           builder: (ctx) {
-            if (controller.user != null) {
-              if (controller.userType?.value?.userType == 'client') {
+            if (controller.user != null &&
+                controller.signUpModel?.value != null) {
+              if (controller.signUpModel?.value?.userType == 'client') {
                 return ProfileClientScreen(); // Create this Scaffold
               } else {
                 return Scaffold(
@@ -86,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
                           const SizedBox(height: 20),
                           //edit profile, favorite, settings, help, logout
                           ListTile(
-                            onTap: () {},
+                            onTap: () => Get.to(const EditProfileScreen()),
                             leading: const Icon(Iconsax.edit),
                             title: const Text('Edit Profile'),
                             trailing: const Icon(Iconsax.arrow_right_3),

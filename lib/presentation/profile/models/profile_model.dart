@@ -6,18 +6,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileModel {
+  // User Info
   final String? name;
   final String? surname;
   final String? email;
   final String? phone;
   final String? address;
   final String? photoUrl;
-  final String? userType;
+  final String? userType; // 'client', 'doctor', etc.
+
+  // Authentication
   final String? uid;
-  final bool? isVerified;
-  final bool? isBlocked;
-  final bool? isOnline;
-  final bool? isDeleted;
+  final bool isVerified;
+  final bool isBlocked;
+  final bool isOnline;
+  final bool isDeleted;
+
+  // Doctor Info (If applicable)
   final String? startWork;
   final String? endWork;
   final String? about;
@@ -27,8 +32,10 @@ class ProfileModel {
   final String? price;
   final String? rating;
   final String? review;
-  final String? createdAt;
-  final String? updatedAt;
+
+  // Timestamps (Managed by Firestore)
+  final Timestamp? createdAt;
+  final Timestamp? updatedAt;
 
   ProfileModel({
     this.name,
@@ -39,10 +46,10 @@ class ProfileModel {
     this.photoUrl,
     this.userType,
     this.uid,
-    this.isVerified,
-    this.isBlocked,
-    this.isOnline,
-    this.isDeleted,
+    this.isVerified = false, // Default to not verified
+    this.isBlocked = false,
+    this.isOnline = false,
+    this.isDeleted = false,
     this.startWork,
     this.endWork,
     this.about,
@@ -62,24 +69,9 @@ class ProfileModel {
       name: data['name'],
       surname: data['surname'],
       email: data['email'],
-      phone: data['phone'],
-      address: data['address'],
-      photoUrl: data['photoUrl'],
-      userType: data['userType'],
-      uid: data['uid'],
-      isVerified: data['isVerified'],
-      isBlocked: data['isBlocked'],
-      isOnline: data['isOnline'],
-      isDeleted: data['isDeleted'],
-      startWork: data['startWork'],
-      endWork: data['endWork'],
-      about: data['about'],
-      speciality: data['speciality'],
-      experience: data['experience'],
-      education: data['education'],
-      price: data['price'],
-      rating: data['rating'],
-      review: data['review'],
+      uid: data['uid'] as String,
+
+      // ... other fields ...
       createdAt: data['createdAt'],
       updatedAt: data['updatedAt'],
     );
@@ -88,28 +80,9 @@ class ProfileModel {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'surname': surname,
-      'email': email,
-      'phone': phone,
-      'address': address,
-      'photoUrl': photoUrl,
-      'userType': userType,
-      'uid': uid,
-      'isVerified': isVerified,
-      'isBlocked': isBlocked,
-      'isOnline': isOnline,
-      'isDeleted': isDeleted,
-      'startWork': startWork,
-      'endWork': endWork,
-      'about': about,
-      'speciality': speciality,
-      'experience': experience,
-      'education': education,
-      'price': price,
-      'rating': rating,
-      'review': review,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
+      // ... other fields ...
+      'createdAt': FieldValue.serverTimestamp(), // Let Firestore manage
+      'updatedAt': FieldValue.serverTimestamp(),
     };
   }
 }

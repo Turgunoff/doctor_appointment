@@ -14,7 +14,7 @@ import '../../auth/sign_up_screen/models/sign_up_model.dart';
 
 class ProfileController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Rxn<SignUpModel>? userType = Rxn<SignUpModel>();
+  Rxn<SignUpModel>? signUpModel = Rxn<SignUpModel>();
   User? user;
 
   @override
@@ -36,7 +36,7 @@ class ProfileController extends GetxController {
           .get();
 
       if (userDocSnapshot.exists) {
-        userType?.value = SignUpModel.fromFirestore(userDocSnapshot);
+        signUpModel?.value = SignUpModel.fromFirestore(userDocSnapshot);
       } else {
         // Handle the case when there's no user document
       }
@@ -47,7 +47,7 @@ class ProfileController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
-        duration: const Duration(seconds: 15),
+        duration: const Duration(seconds: 3),
       );
     }
   }

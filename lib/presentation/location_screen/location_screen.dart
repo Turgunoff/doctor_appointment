@@ -34,7 +34,7 @@ class LocationScreen extends StatelessWidget {
         ),
         elevation: 0,
         backgroundColor: Colors.white.withAlpha(100),
-        title: const Text('Doctor Details'),
+        title: const Text('Location'),
         centerTitle: true,
       ),
       body: SizedBox(
@@ -48,6 +48,7 @@ class LocationScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(200),
               child: Container(
                 padding: const EdgeInsets.all(40),
+
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor.withOpacity(0.2),
                 ),
