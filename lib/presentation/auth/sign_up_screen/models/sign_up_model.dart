@@ -8,14 +8,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class SignUpModel {
   final String uid;
   final String email;
-  final String userType;
   final Timestamp createdAt;
+  final bool isVerified;
 
   SignUpModel({
     required this.uid,
     required this.email,
-    required this.userType,
     required this.createdAt,
+    required this.isVerified,
   });
 
   // Method to convert Firestore data to UserModel
@@ -24,16 +24,16 @@ class SignUpModel {
     return SignUpModel(
       uid: data['uid'],
       email: data['email'],
-      userType: data['userType'],
       createdAt: data['createdAt'],
+      isVerified: data['isVerified'],
     );
   }
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
       'email': email,
-      'userType': userType,
       'createdAt': createdAt,
+      'isVerified': isVerified,
     };
   }
 }

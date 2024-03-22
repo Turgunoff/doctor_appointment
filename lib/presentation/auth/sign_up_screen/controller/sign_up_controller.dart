@@ -11,25 +11,14 @@ import 'package:get/get.dart';
 import '../../../../routes/app_routes.dart';
 import '../models/sign_up_model.dart';
 
-enum UserType {
-  client,
-  doctor,
-}
-
 class SignUpController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
-  UserType? userType;
 
-  void selectUserType(UserType type) {
-    userType = type;
-    update();
-  }
-
-  Future<void> signUp(String email, String password, UserType userType) async {
+  Future<void> signUp(String email, String password) async {
     try {
       // Authentication
       final userCredential = await _auth.createUserWithEmailAndPassword(
@@ -41,28 +30,15 @@ class SignUpController extends GetxController {
       final signUpModel = SignUpModel(
         uid: userCredential.user!.uid,
         email: email,
-        userType: userType.toString().split('.').last,
         createdAt: Timestamp.now(),
+        isVerified: false,
       );
 
       // Conditional Save
-      if (userType == UserType.client) {
-        await _firestore
-            .collection('userClients')
-            .doc(userCredential.user!.uid)
-            .set(signUpModel.toMap()); // Assuming you add toMap()
-      } else if (userType == UserType.doctor) {
-        await _firestore
-            .collection('userDoctors')
-            .doc(userCredential.user!.uid)
-            .set(signUpModel.toMap());
-      } else {
-        // Handle unexpected UserType (error or future expansion)
-      }
       await _firestore
-          .collection('userTypes')
+          .collection('userClients')
           .doc(userCredential.user!.uid)
-          .set({'userType': userType.toString().split('.').last});
+          .set(signUpModel.toMap()); // Assuming you add toMap()
 
       Get.offAllNamed(AppRoutes.navigationPage);
       Get.snackbar(

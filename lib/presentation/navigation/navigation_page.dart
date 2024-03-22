@@ -10,7 +10,7 @@ import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
 
 import '../home/home_screen.dart';
 import '../location_screen/location_screen.dart';
-import '../profile/profile_doctor_screen.dart';
+import '../profile/profile_screen.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});

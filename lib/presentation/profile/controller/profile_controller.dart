@@ -3,6 +3,8 @@
 // @Date: 30.01.2024
 //
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/widgets/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,11 +13,14 @@ import 'package:get/get.dart';
 
 import '../../../routes/app_routes.dart';
 import '../../auth/sign_up_screen/models/sign_up_model.dart';
+import '../models/profile_model.dart';
 
 class ProfileController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Rxn<SignUpModel>? signUpModel = Rxn<SignUpModel>();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   User? user;
+
+  final Rx<ProfileModel> userProfile = ProfileModel().obs;
 
   @override
   void onInit() {
@@ -24,32 +29,26 @@ class ProfileController extends GetxController {
     getUserData();
   }
 
+  //getUserData
   Future<void> getUserData() async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
-    if (firebaseUser == null) return;
-
     try {
-      final collection = firebaseUser.email!.contains('client') ? 'userClients' : 'userDoctors';
-      final userDocSnapshot = await FirebaseFirestore.instance
-          .collection(collection)
-          .doc(firebaseUser.uid)
-          .get();
-
-      if (userDocSnapshot.exists) {
-        signUpModel?.value = SignUpModel.fromFirestore(userDocSnapshot);
-      } else {
-        // Handle the case when there's no user document
+      final snapshot =
+          await _firestore.collection('userClients').doc(user!.uid).get();
+      if (snapshot.exists) {
+        userProfile.value = ProfileModel.fromFirestore(snapshot);
       }
-    } catch (e) {
-      Get.snackbar(
-        'Error Fetching Data',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 3),
-      );
+    } catch (error) {
+      print('Error fetching user profile: $error');
     }
+    _firestore
+        .collection('userClients')
+        .doc(user!.uid)
+        .snapshots()
+        .listen((snapshot) {
+      if (snapshot.exists) {
+        userProfile.value = ProfileModel.fromFirestore(snapshot);
+      }
+    });
   }
 
   void logOut() async {

@@ -19,7 +19,7 @@ import '../presentation/inbox_screen/inbox_screen.dart';
 import '../presentation/location_screen/location_screen.dart';
 import '../presentation/my_booking_screen/my_booking_screen.dart';
 import '../presentation/navigation/navigation_page.dart';
-import '../presentation/profile/profile_doctor_screen.dart';
+import '../presentation/profile/profile_screen.dart';
 
 class AppRoutes {
   static const String splashScreen = '/splash_screen';

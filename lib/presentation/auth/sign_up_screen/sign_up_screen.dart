@@ -40,191 +40,72 @@ class SignUpScreen extends StatelessWidget {
               },
             ),
           ),
-          body: GetBuilder<SignUpController>(builder: (ctx) {
-            return SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          body: Stack(
+            children: [
+              SizedBox(
+                width: size.width,
+                height: size.height,
+                child: Image.asset(
+                  'assets/images/back.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Scaffold(
+                backgroundColor: Colors.transparent,
+                appBar: AppBar(
+                  backgroundColor: Colors.white.withOpacity(0.0),
+                  leading: IconButton(
+                    icon: const Icon(Iconsax.arrow_left_2),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          signUpController.selectUserType(
-                            UserType.client,
-                          );
-                        },
-                        child: Container(
-                          height: 150,
-                          width: 150,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: signUpController.userType == UserType.client
-                                ? Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.2)
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color:
-                                  signUpController.userType == UserType.client
-                                      ? Theme.of(context).primaryColor
-                                      : Colors.grey,
-                              width: 2,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'I am a client, looking for a doctor',
-                                style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.fontSize),
-                              ),
-                            ],
-                          ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1),
+                      Text(
+                        'Sign Up as Client',
+                        style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.bodyLarge?.fontSize,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          signUpController.selectUserType(
-                            UserType.doctor,
+                      const SizedBox(height: 20),
+                      CustomTextField(
+                        hintText: 'Email',
+                        prefixIcon: Iconsax.message,
+                        controller: signUpController.emailController,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        hintText: 'Password',
+                        prefixIcon: Iconsax.lock,
+                        controller: signUpController.passwordController,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomButton(
+                        textButton: 'Sign Up',
+                        onPressed: () {
+                          signUpController.signUp(
+                            signUpController.emailController.text,
+                            signUpController.passwordController.text,
                           );
                         },
-                        child: Container(
-                          height: 150,
-                          width: 150,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: signUpController.userType == UserType.doctor
-                                ? Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.2)
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color:
-                                  signUpController.userType == UserType.doctor
-                                      ? Theme.of(context).primaryColor
-                                      : Colors.grey,
-                              width: 2,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'I am a doctor, looking for work',
-                                style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.fontSize),
-                              ),
-                            ],
-                          ),
-                        ),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 50,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  CustomButton(
-                    textButton: 'Sign Up',
-                    onPressed: () {
-                      Get.to(
-                        () => SignUpNext(),
-                        transition: Transition.rightToLeft,
-                      );
-                    },
-                    width: size.width * 0.8,
-                    height: 50,
-                  ),
-                ],
-              ),
-            );
-          }),
-        ),
-      ],
-    );
-  }
-}
-
-class SignUpNext extends StatelessWidget {
-  SignUpNext({super.key});
-
-  final signUpController = Get.put(SignUpController());
-
-  @override
-  Widget build(BuildContext context) {
-    //width and height of the screen
-    final size = MediaQuery.of(context).size;
-    return Stack(
-      children: [
-        SizedBox(
-          width: size.width,
-          height: size.height,
-          child: Image.asset(
-            'assets/images/back.png',
-            fit: BoxFit.cover,
+                ),
+              )
+            ],
           ),
         ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.white.withOpacity(0.0),
-            leading: IconButton(
-              icon: const Icon(Iconsax.arrow_left_2),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                Text(
-                  'Sign Up as a ${signUpController.userType == UserType.client ? 'Client' : 'Doctor'}',
-                  style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                CustomTextField(
-                  hintText: 'Email',
-                  prefixIcon: Iconsax.message,
-                  controller: signUpController.emailController,
-                ),
-                const SizedBox(height: 10),
-                CustomTextField(
-                  hintText: 'Password',
-                  prefixIcon: Iconsax.lock,
-                  controller: signUpController.passwordController,
-                ),
-                const SizedBox(height: 10),
-                CustomButton(
-                  textButton: 'Sign Up',
-                  onPressed: () {
-                    signUpController.signUp(
-                      signUpController.emailController.text,
-                      signUpController.passwordController.text,
-                      signUpController.userType!,
-                    );
-                  },
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 50,
-                ),
-              ],
-            ),
-          ),
-        )
       ],
     );
   }
