@@ -4,6 +4,7 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor/presentation/profile/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,6 +63,7 @@ class EditProfileController extends GetxController {
       emailController.text = '';
       birthdayController.text = '';
       phoneController.text = '';
+      Get.off(() => ProfileDoctorScreen());
       // ... clear other controllers ...
     } catch (error) {
       Get.snackbar(

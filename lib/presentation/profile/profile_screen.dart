@@ -8,7 +8,6 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../widgets/custom_button.dart';
 import 'controller/profile_controller.dart';
-import 'models/profile_model.dart';
 
 class ProfileDoctorScreen extends StatelessWidget {
   ProfileDoctorScreen({super.key});
@@ -21,46 +20,48 @@ class ProfileDoctorScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return GetBuilder<ProfileController>(builder: (context) {
       if (_controller.user != null) {
-        return Stack(
-          children: [
-            SizedBox(
-              width: size.width,
-              height: size.height,
-              child: const Image(
-                image: AssetImage('assets/images/back.png'),
-                fit: BoxFit.cover,
+        if (_controller.userProfile.value != null) {
+          return Stack(
+            children: [
+              SizedBox(
+                width: size.width,
+                height: size.height,
+                child: const Image(
+                  image: AssetImage('assets/images/back.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Scaffold(
-              backgroundColor: Colors.transparent,
-              extendBodyBehindAppBar: true,
-              appBar: AppBar(
-                centerTitle: true,
-                flexibleSpace: ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                    child: Container(
-                      color: Colors.white.withOpacity(0.0),
+              Scaffold(
+                backgroundColor: Colors.transparent,
+                extendBodyBehindAppBar: true,
+                appBar: AppBar(
+                  centerTitle: true,
+                  flexibleSpace: ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        color: Colors.white.withOpacity(0.0),
+                      ),
                     ),
                   ),
+                  elevation: 0,
+                  backgroundColor: Colors.white.withOpacity(0.0),
+                  title: const Text('Profile'),
                 ),
-                elevation: 0,
-                backgroundColor: Colors.white.withOpacity(0.0),
-                title: const Text('Profile'),
-              ),
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(top: 110),
-                child: SizedBox(
-                  width: size.width,
-                  child: Obx(() {
-                    final userProfile = _controller.userProfile.value;
-                    return Column(
+                body: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(top: 110),
+                  child: SizedBox(
+                    width: size.width,
+                    child: Column(
                       children: [
                         CircleAvatar(
                           radius: 60,
-                          backgroundImage: userProfile.photoUrl != null
-                              ? NetworkImage(userProfile.photoUrl!)
+                          backgroundImage: _controller
+                                      .userProfile.value.photoUrl !=
+                                  null
+                              ? NetworkImage(
+                                  _controller.userProfile.value.photoUrl!)
                               : AssetImage('assets/images/user_not_photo.png')
                                   as ImageProvider,
                           backgroundColor: Colors.white,
@@ -68,15 +69,17 @@ class ProfileDoctorScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         Column(
                           children: [
-                            if (userProfile.isVerified == true) ...[
+                            if (_controller.userProfile.value.isVerified ==
+                                true) ...[
                               Text(
-                                userProfile.fullName!,
+                                _controller.userProfile.value.fullName ??
+                                    'Guest',
                                 style: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w600),
                               ),
                               //phone number
                               Text(
-                                '998946433733',
+                                _controller.userProfile.value.phone ?? '',
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey.shade700,
@@ -84,7 +87,8 @@ class ProfileDoctorScreen extends StatelessWidget {
                               ),
                             ], // End of the conditional block
                             // Verification Notice (Always Display for isVerified == false)
-                            if (userProfile.isVerified == false)
+                            if (_controller.userProfile.value.isVerified ==
+                                false)
                               const Text(
                                 'Please edit your profile',
                                 style: TextStyle(
@@ -96,7 +100,7 @@ class ProfileDoctorScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         //edit profile, favorite, settings, help, logout
                         ListTile(
-                          onTap: () => Get.to(EditProfileScreen(),
+                          onTap: () => Get.to(()=>EditProfileScreen(),
                               transition: Transition.rightToLeftWithFade),
                           leading: const Icon(Iconsax.edit),
                           title: const Text('Edit Profile'),
@@ -150,13 +154,17 @@ class ProfileDoctorScreen extends StatelessWidget {
                           ),
                         ),
                       ],
-                    );
-                  }),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
-        );
+            ],
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       } else {
         return const NotLogIn();
       }

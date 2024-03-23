@@ -11,6 +11,7 @@ class ProfileModel {
   final String? fullName;
   final bool? isVerified;
   final String? photoUrl;
+  final String? phone;
 
   ProfileModel({
     this.uid,
@@ -18,6 +19,7 @@ class ProfileModel {
     this.fullName,
     this.isVerified,
     this.photoUrl,
+    this.phone,
   });
 
   factory ProfileModel.fromFirestore(DocumentSnapshot doc) {
@@ -28,6 +30,7 @@ class ProfileModel {
       isVerified: data['isVerified'],
       uid: doc.id, // Assuming the UID is the document ID
       photoUrl: data['photoUrl'],
+      phone: data['phone'],
     );
   }
 }
