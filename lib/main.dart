@@ -19,6 +19,7 @@ void main() async {
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
+
   await GetStorage.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
