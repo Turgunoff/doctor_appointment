@@ -70,8 +70,8 @@ class EditProfileScreen extends StatelessWidget {
                         flex: 1,
                         child: CustomTextField(
                           labelText: 'First Name*',
-                          controller:
-                              _editProfileController.firstNameController,
+                          // controller:
+                          //     _editProfileController.firstNameController,
                         ),
                       ),
                       SizedBox(width: 10),
@@ -79,7 +79,7 @@ class EditProfileScreen extends StatelessWidget {
                         flex: 1,
                         child: CustomTextField(
                           labelText: 'Last Name*',
-                          controller: _editProfileController.lastNameController,
+                          // controller: _editProfileController.lastNameController,
                         ),
                       ),
                     ],
@@ -102,8 +102,8 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             TextField(
-                              controller:
-                                  _editProfileController.birthdayController,
+                              // controller:
+                              //     _editProfileController.birthdayController,
                               maxLines: 1,
                               keyboardType:
                                   TextInputType.number, // For numeric input
@@ -152,43 +152,43 @@ class EditProfileScreen extends StatelessWidget {
                                 fontSize: 16,
                               ),
                             ),
-                            Container(
-                              height: 50,
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey.shade600,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: DropdownButton<String>(
-                                hint: Text('data'),
-                                isExpanded: true,
-                                value: _editProfileController.selectedItem,
-                                icon: const Icon(Iconsax.arrow_down_1),
-                                iconSize: 24,
-                                elevation: 16,
-                                style: TextStyle(
-                                  color: Colors.grey.shade900,
-                                  fontSize: 16,
-                                ),
-                                underline: Container(
-                                  height: 0,
-                                  color: Colors.transparent,
-                                ),
-                                onChanged: (value) {
-                                  _editProfileController.selectedItem = value!;
-                                },
-                                items: _editProfileController.items
-                                    .map((String value) =>
-                                        DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        ))
-                                    .toList(),
-                              ),
-                            ),
+                            // Container(
+                            //   height: 50,
+                            //   padding:
+                            //       const EdgeInsets.only(left: 10, right: 10),
+                            //   decoration: BoxDecoration(
+                            //     border: Border.all(
+                            //       color: Colors.grey.shade600,
+                            //     ),
+                            //     borderRadius: BorderRadius.circular(8),
+                            //   ),
+                            //   child: DropdownButton<String>(
+                            //     hint: Text('data'),
+                            //     isExpanded: true,
+                            //     // value: _editProfileController.selectedItem,
+                            //     icon: const Icon(Iconsax.arrow_down_1),
+                            //     iconSize: 24,
+                            //     elevation: 16,
+                            //     style: TextStyle(
+                            //       color: Colors.grey.shade900,
+                            //       fontSize: 16,
+                            //     ),
+                            //     underline: Container(
+                            //       height: 0,
+                            //       color: Colors.transparent,
+                            //     ),
+                            //     onChanged: (value) {
+                            //       // _editProfileController.selectedItem = value!;
+                            //     },
+                            //     items: _editProfileController.items
+                            //         .map((String value) =>
+                            //             DropdownMenuItem<String>(
+                            //               value: value,
+                            //               child: Text(value),
+                            //             ))
+                            //         .toList(),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -198,7 +198,7 @@ class EditProfileScreen extends StatelessWidget {
                   //phone number
                   CustomTextField(
                     labelText: 'Phone Number*',
-                    controller: _editProfileController.phoneController,
+                    // controller: _editProfileController.phoneController,
                   ),
                   const SizedBox(height: 20),
                   //checkbox confirm terms
@@ -226,7 +226,7 @@ class EditProfileScreen extends StatelessWidget {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        _editProfileController.editProfile();
+                        // _editProfileController.editProfile();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,

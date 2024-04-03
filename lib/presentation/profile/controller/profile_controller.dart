@@ -5,9 +5,7 @@
 
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor/widgets/custom_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,44 +14,44 @@ import '../../auth/sign_up_screen/models/sign_up_model.dart';
 import '../models/profile_model.dart';
 
 class ProfileController extends GetxController {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  User? user;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // User? user;
 
-  final Rx<ProfileModel> userProfile = ProfileModel().obs;
+  // final Rx<ProfileModel> userProfile = ProfileModel().obs;
 
   @override
   void onInit() {
     super.onInit();
-    user = _auth.currentUser;
-    getUserData();
+    // user = _auth.currentUser;
+    // getUserData();
   }
 
   //getUserData
-  Future<void> getUserData() async {
-    try {
-      final snapshot =
-          await _firestore.collection('userClients').doc(user!.uid).get();
-      if (snapshot.exists) {
-        userProfile.value = ProfileModel.fromFirestore(snapshot);
-      }
-    } catch (error) {
-      print('Error fetching user profile: $error');
-    }
-    _firestore
-        .collection('userClients')
-        .doc(user!.uid)
-        .snapshots()
-        .listen((snapshot) {
-      if (snapshot.exists) {
-        userProfile.value = ProfileModel.fromFirestore(snapshot);
-      }
-    });
-  }
+  // Future<void> getUserData() async {
+  //   try {
+  //     final snapshot =
+  //         await _firestore.collection('userClients').doc(user!.uid).get();
+  //     if (snapshot.exists) {
+  //       userProfile.value = ProfileModel.fromFirestore(snapshot);
+  //     }
+  //   } catch (error) {
+  //     print('Error fetching user profile: $error');
+  //   }
+  //   _firestore
+  //       .collection('userClients')
+  //       .doc(user!.uid)
+  //       .snapshots()
+  //       .listen((snapshot) {
+  //     if (snapshot.exists) {
+  //       userProfile.value = ProfileModel.fromFirestore(snapshot);
+  //     }
+  //   });
+  // }
 
   void logOut() async {
     try {
-      await _auth.signOut();
+      // await _auth.signOut();
       Get.defaultDialog(
         title: 'Log Out',
         middleText: 'Are you sure you want to log out?',
@@ -66,7 +64,7 @@ class ProfileController extends GetxController {
             textButton: 'Yes',
             color: Colors.red,
             onPressed: () {
-              _auth.signOut();
+              // _auth.signOut();
               Get.offAllNamed(AppRoutes.navigationPage);
             }),
         cancel: CustomButton(
