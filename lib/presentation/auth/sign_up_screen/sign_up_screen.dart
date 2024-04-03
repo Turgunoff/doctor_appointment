@@ -14,6 +14,7 @@ import '../../../generated/assets.dart';
 import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_textField.dart';
+import '../models/auth_model.dart';
 import 'controller/sign_up_controller.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -35,29 +36,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _emailController.text.isNotEmpty &&
         _fullNameController.text.isNotEmpty) {
       try {
-        final signUpResponse = await supabase.auth.signUp(
-          password: _passwordController.text,
+        final response = await supabase.auth.signUp(
           email: _emailController.text,
+          password: _passwordController.text,
         );
-
-        if (signUpResponse.error == null) {
-          final userId = signUpResponse.user!.id;
-
-          await supabase.client.from('profiles').insert({
-            'user_id': userId,
-            'full_name': _fullNameController.text
-          }).execute();
-
-          Get.back(); // Close SignUpScreen
+        if (response.user != null) {
+          final authModel = AuthModel(
+            email: _emailController.text,
+            password: _passwordController.text,
+            name: _fullNameController.text,
+          );
+          await supabase.from('profiles').upsert(authModel.toJson());
+          Get.back();
           Get.snackbar(
             'Success',
-            'User created and profile saved',
+            'User created successfully',
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.green.shade400,
             colorText: Colors.white,
           );
-        } else {
-          handleSignUpError(signUpResponse.error!);
         }
       } on AuthException catch (error) {
         handleSignUpError(error);
