@@ -36,25 +36,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _emailController.text.isNotEmpty &&
         _fullNameController.text.isNotEmpty) {
       try {
-        final response = await supabase.auth.signUp(
-          email: _emailController.text,
-          password: _passwordController.text,
-        );
-        if (response.user != null) {
+        if (mounted) {
           final authModel = AuthModel(
-            email: _emailController.text,
-            password: _passwordController.text,
-            name: _fullNameController.text,
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+            full_name: _fullNameController.text.trim(),
+            balance: 0.0, // Use double literals
+            payment_id: 123456, // Use int literals
           );
-          await supabase.from('profiles').upsert(authModel.toJson());
-          Get.back();
-          Get.snackbar(
-            'Success',
-            'User created successfully',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.green.shade400,
-            colorText: Colors.white,
+          final response = await supabase.auth.signUp(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+            data: {'full_name': _fullNameController.text},
           );
+          if (response.user != null) {
+            authModel.id = response.user!.id;
+            final resp = await supabase
+                .from('profiles')
+                .insert(authModel.toJson())
+                .execute();
+
+            Get.back();
+            Get.snackbar(
+              'Success',
+              'User created successfully',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green.shade400,
+              colorText: Colors.white,
+            );
+          }
         }
       } on AuthException catch (error) {
         handleSignUpError(error);

@@ -24,11 +24,13 @@ Future<void> main() async {
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
   await Supabase.initialize(
-    url: 'https://vayixsvgpmwhkbontmpf.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheWl4c3ZncG13aGtib250bXBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIwMzM2MzgsImV4cCI6MjAyNzYwOTYzOH0.lpp-MFB5dcyg13PaLNGwTGz7a76j-1BypYg6gVWhJa4',
+    url: 'https://tqzhxecjorzyvlhzmulf.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxemh4ZWNqb3J6eXZsaHptdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIyMjkyNDksImV4cCI6MjAyNzgwNTI0OX0.yVlFW3KZ9aSflvAxnlOJzrXcI5oHobrj_N0P8fMGP1Y',
   );
   runApp(const MyApp());
 }
+
 final supabase = Supabase.instance.client;
 
 class MyApp extends StatefulWidget {

@@ -4,19 +4,25 @@
 // @File name: auth_model
 //
 
-class AuthModel{
+import 'dart:ffi';
+
+class AuthModel {
   String? id;
-  String email;
-  String password;
-  String? name;
+  String? email;
+  String? password;
+  String? full_name;
   String? phone;
+  double? balance;
+  int? payment_id;
 
   AuthModel({
     this.id,
-    required this.email,
-    required this.password,
-    this.name,
+    this.email,
+    this.password,
+    this.full_name,
     this.phone,
+    this.balance,
+    this.payment_id,
   });
 
   factory AuthModel.fromJson(Map<String, dynamic> json) {
@@ -24,8 +30,10 @@ class AuthModel{
       id: json['id'],
       email: json['email'],
       password: json['password'],
-      name: json['name'],
+      full_name: json['full_name'],
       phone: json['phone'],
+      balance: json['balance'],
+      payment_id: json['payment_id'],
     );
   }
 
@@ -34,8 +42,10 @@ class AuthModel{
       'id': id,
       'email': email,
       'password': password,
-      'name': name,
+      'full_name': full_name,
       'phone': phone,
+      'balance': balance,
+      'payment_id': payment_id,
     };
   }
 }
