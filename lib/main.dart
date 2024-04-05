@@ -23,12 +23,12 @@ Future<void> main() async {
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
-  await Supabase.initialize(
-    url: 'https://tqzhxecjorzyvlhzmulf.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxemh4ZWNqb3J6eXZsaHptdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIyMjkyNDksImV4cCI6MjAyNzgwNTI0OX0.yVlFW3KZ9aSflvAxnlOJzrXcI5oHobrj_N0P8fMGP1Y',
-  );
   runApp(const MyApp());
+  await Supabase.initialize(
+    url: 'https://bcmcxmxmqpvotnraeiwl.supabase.co',
+    anonKey:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjbWN4bXhtcXB2b3RucmFlaXdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIzMjMxMDAsImV4cCI6MjAyNzg5OTEwMH0.etq12QC9K4nlx9qgb82FgNMcRXNq31iEeRGW7lYQ0mI',
+  );
 }
 
 final supabase = Supabase.instance.client;

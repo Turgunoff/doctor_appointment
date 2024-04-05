@@ -11,11 +11,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../generated/assets.dart';
-import '../../../routes/app_routes.dart';
 import '../../../widgets/custom_button.dart';
-import '../../../widgets/custom_textField.dart';
-import '../models/auth_model.dart';
-import 'controller/sign_up_controller.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -31,41 +27,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _fullNameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void _signUp() async {
+  Future<void> _signUp() async {
     if (_passwordController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
         _fullNameController.text.isNotEmpty) {
       try {
-        if (mounted) {
-          final authModel = AuthModel(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-            full_name: _fullNameController.text.trim(),
-            balance: 0.0, // Use double literals
-            payment_id: 123456, // Use int literals
-          );
-          final response = await supabase.auth.signUp(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-            data: {'full_name': _fullNameController.text},
-          );
-          if (response.user != null) {
-            authModel.id = response.user!.id;
-            final resp = await supabase
-                .from('profiles')
-                .insert(authModel.toJson())
-                .execute();
-
-            Get.back();
-            Get.snackbar(
-              'Success',
-              'User created successfully',
-              snackPosition: SnackPosition.TOP,
-              backgroundColor: Colors.green.shade400,
-              colorText: Colors.white,
-            );
-          }
-        }
+        await supabase.auth.signUp(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+          data: {
+            'full_name': _fullNameController.text.trim(),
+            'email': _emailController.text.trim(),
+            'type': 'client',
+          },
+        );
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'User created successfully',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green.shade400,
+          colorText: Colors.white,
+        );
       } on AuthException catch (error) {
         handleSignUpError(error);
       } catch (error) {

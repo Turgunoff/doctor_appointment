@@ -9,6 +9,7 @@ import 'package:doctor/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../main.dart';
 import '../../../routes/app_routes.dart';
 import '../../auth/sign_up_screen/models/sign_up_model.dart';
 import '../models/profile_model.dart';
@@ -51,7 +52,7 @@ class ProfileController extends GetxController {
 
   void logOut() async {
     try {
-      // await _auth.signOut();
+      // await supabase.auth.signOut();
       Get.defaultDialog(
         title: 'Log Out',
         middleText: 'Are you sure you want to log out?',
@@ -63,8 +64,8 @@ class ProfileController extends GetxController {
             width: double.infinity,
             textButton: 'Yes',
             color: Colors.red,
-            onPressed: () {
-              // _auth.signOut();
+            onPressed: () async {
+              await supabase.auth.signOut();
               Get.offAllNamed(AppRoutes.navigationPage);
             }),
         cancel: CustomButton(
