@@ -28,6 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _passwordController = TextEditingController();
 
   Future<void> _signUp() async {
+    const String type = 'client'; // Тип пользователя (не переводится)
     if (_passwordController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
         _fullNameController.text.isNotEmpty) {
@@ -38,23 +39,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
           data: {
             'full_name': _fullNameController.text.trim(),
             'email': _emailController.text.trim(),
-            'type': 'client',
+            'type': type.trim(),
           },
         );
+
         Get.back();
         Get.snackbar(
-          'Success',
-          'User created successfully',
+          'Успешно!',
+          'Пользователь успешно создан',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.green.shade400,
           colorText: Colors.white,
         );
       } on AuthException catch (error) {
         handleSignUpError(error);
+        print(error);
       } catch (error) {
         Get.snackbar(
-          'Error',
-          'An unexpected error occurred: $error',
+          'Ошибка',
+          'Произошла непредвиденная ошибка: $error',
           backgroundColor: Theme.of(context).colorScheme.error,
           colorText: Colors.white,
           duration: const Duration(seconds: 2),
@@ -62,8 +65,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
     } else {
       Get.snackbar(
-        'Error',
-        'All fields must be filled',
+        'Ошибка',
+        'Все поля должны быть заполнены',
         backgroundColor: Theme.of(context).colorScheme.error,
         colorText: Colors.white,
         duration: const Duration(seconds: 2),
@@ -72,22 +75,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void handleSignUpError(AuthException error) {
-    String errorMessage = "An unknown error occurred.";
+    String errorMessage = "Произошла неизвестная ошибка.";
 
     switch (error.message) {
-      case "User already registered with this email":
-        errorMessage = "This email address is already in use.";
+      case "User already registered":
+        errorMessage = "Пользователь с таким email уже зарегистрирован.";
         break;
-      case "Password should be at least 6 characters":
-        errorMessage = "Password is too weak.";
+      case "Password should be at least 6 characters.":
+        errorMessage = "Пароль слишком короткий";
         break;
-      // Add more cases for other error.message values...
+      case "Unable to validate email address: invalid format":
+        errorMessage = "Неверный формат email";
+        break;
+      // Добавьте другие варианты для обработки ошибок
       default:
-        errorMessage = "Sign-up error: ${error.message}";
+        errorMessage = "Ошибка регистрации: ${error.message}";
     }
 
     Get.snackbar(
-      'Error',
+      'Ошибка',
       errorMessage,
       backgroundColor: Theme.of(context).colorScheme.error,
       colorText: Colors.white,

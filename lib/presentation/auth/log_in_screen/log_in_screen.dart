@@ -54,6 +54,70 @@ class _LogInScreenState extends State<LogInScreen> {
     super.dispose();
   }
 
+  Future<void> _logIn() async {
+    if (_passwordController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty) {
+      try {
+        await supabase.auth.signInWithPassword(
+          password: _passwordController.text,
+          email: _emailController.text,
+        );
+
+        // Успешный вход
+        Get.offAllNamed(AppRoutes.navigationPage);
+        Get.snackbar(
+          'Успешно!',
+          'Вы успешно вошли в систему',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green.shade400,
+          colorText: Colors.white,
+        );
+      } on AuthException catch (error) {
+        handleLoginError(error);
+      } on Exception catch (_) {
+        Get.snackbar(
+          'Ошибка',
+          'Произошла непредвиденная ошибка',
+          backgroundColor: Theme.of(context).colorScheme.error,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
+        );
+      }
+    } else {
+      Get.snackbar(
+        'Ошибка',
+        'Все поля должны быть заполнены',
+        backgroundColor: Theme.of(context).colorScheme.error,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 2),
+      );
+    }
+  }
+
+  void handleLoginError(AuthException error) {
+    String errorMessage;
+
+    switch (error.message) {
+      case "Invalid credentials": // Supabase-specific message
+        errorMessage = "Неверный email или пароль";
+        break;
+      case "Invalid login credentials":
+        errorMessage = "Неверный email или пароль";
+        break;
+      // Add other cases if needed...
+      default:
+        errorMessage = "Ошибка входа: ${error.message}";
+    }
+
+    Get.snackbar(
+      'Ошибка',
+      errorMessage,
+      backgroundColor: Theme.of(context).colorScheme.error,
+      colorText: Colors.white,
+      duration: const Duration(seconds: 5),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //width and height of the screen
@@ -160,30 +224,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     height: 50,
                     width: double.infinity,
                     textButton: 'Log In',
-                    onPressed: () async {
-                      if (_passwordController.text.isNotEmpty &&
-                          _emailController.text.isNotEmpty) {
-                        await supabase.auth.signInWithPassword(
-                          password: _passwordController.text,
-                          email: _emailController.text,
-                        );
-                        Get.offAllNamed(AppRoutes.navigationPage);
-                        Get.snackbar(
-                          'Success',
-                          'Log In successfully',
-                          snackPosition: SnackPosition.TOP,
-                          backgroundColor: Colors.green.shade400,
-                          colorText: Colors.white,
-                        );
-                      } else {
-                        Get.snackbar(
-                          'Error',
-                          'All fields must be filled',
-                          backgroundColor: Theme.of(context).colorScheme.error,
-                          colorText: Colors.white,
-                          duration: const Duration(seconds: 2),
-                        );
-                      }
+                    onPressed: () {
+                      _logIn();
                     },
                   ),
                   const SizedBox(height: 20),

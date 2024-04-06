@@ -55,35 +55,57 @@ class ProfileDoctorScreen extends StatelessWidget {
                 width: size.width,
                 child: Column(
                   children: [
-                    const CircleAvatar(
-                      radius: 60,
-                      backgroundImage:
-                          AssetImage('assets/images/user_not_photo.png')
-                              as ImageProvider,
-                      backgroundColor: Colors.white,
-                    ),
-                    const SizedBox(height: 20),
-                    Column(
-                      children: [
-                        const Text(
-                          'Guest',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600),
-                        ),
-                        //phone number
-                        Text(
-                          '23423',
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        const Text(
-                          'Please edit your profile',
-                          style: TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      width: size.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Obx(() => CircleAvatar(
+                                radius: 50,
+                                backgroundImage: _controller.avatarUrl.value ==
+                                        null
+                                    ? NetworkImage(_controller.avatarUrl.value)
+                                    : AssetImage(_controller.avatarUrl.value)
+                                        as ImageProvider,
+                                backgroundColor: Colors.white,
+                              )),
+                          const SizedBox(height: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Obx(() => Text(
+                                      'Привет, ${_controller.fullName.value}',
+                                      style: const TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w600))),
+                                ],
+                              ),
+                              //payment id
+                              Row(
+                                children: [
+                                  Obx(() => Text(
+                                        'ID: ${_controller.paymentId.value}',
+                                        style: TextStyle(fontSize: 16),
+                                      )),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              //balance
+                              Row(
+                                children: [
+                                  Obx(() => Text(
+                                        'Баланс: ${_controller.balance.value} сум',
+                                        style: TextStyle(fontSize: 16),
+                                      )),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 20),
                     //edit profile, favorite, settings, help, logout
