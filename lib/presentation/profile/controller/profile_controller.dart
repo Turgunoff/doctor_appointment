@@ -48,7 +48,7 @@ class ProfileController extends GetxController {
         fullName.value = clientData['full_name'] ?? '';
         paymentId.value = clientData['payment_id'] ?? '';
         balance.value = clientData['balance'] ?? 0;
-        avatarUrl.value = clientData['avatar_url'] ?? Assets.imagesUserNotPhoto;
+        avatarUrl.value = clientData['avatar_url'] ?? '';
       }
     });
   }

@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:doctor/generated/assets.dart';
 import 'package:doctor/presentation/edit_profile_screen/edit_profile_screen.dart';
 import 'package:doctor/routes/app_routes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -61,15 +63,19 @@ class ProfileDoctorScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Obx(() => CircleAvatar(
-                                radius: 50,
-                                backgroundImage: _controller.avatarUrl.value ==
-                                        null
-                                    ? NetworkImage(_controller.avatarUrl.value)
-                                    : AssetImage(_controller.avatarUrl.value)
-                                        as ImageProvider,
-                                backgroundColor: Colors.white,
-                              )),
+                          Obx(
+                            () => _controller.avatarUrl.value == null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child:
+                                        Image.asset(Assets.imagesUserNotPhoto),
+                                  )
+                                : CircleAvatar(
+                                    radius: 50,
+                                    backgroundImage: NetworkImage(
+                                        _controller.avatarUrl.value),
+                                  ),
+                          ),
                           const SizedBox(height: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +94,7 @@ class ProfileDoctorScreen extends StatelessWidget {
                                 children: [
                                   Obx(() => Text(
                                         'ID: ${_controller.paymentId.value}',
-                                        style: TextStyle(fontSize: 16),
+                                        style: const TextStyle(fontSize: 16),
                                       )),
                                 ],
                               ),
@@ -98,7 +104,7 @@ class ProfileDoctorScreen extends StatelessWidget {
                                 children: [
                                   Obx(() => Text(
                                         'Баланс: ${_controller.balance.value} сум',
-                                        style: TextStyle(fontSize: 16),
+                                        style: const TextStyle(fontSize: 16),
                                       )),
                                 ],
                               ),
@@ -358,7 +364,7 @@ class NotLogIn extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Center(
               child: CustomButton(
-                textButton: 'Kirish/Ro\'yxatdan o\'tish',
+                textButton: 'Войти',
                 onPressed: () {
                   Get.toNamed(AppRoutes.logInScreen);
                 },
