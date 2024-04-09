@@ -5,7 +5,9 @@
 
 import 'dart:async';
 
+import 'package:doctor/main.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/category_model.dart';
 import '../models/doctors.dart';
@@ -16,11 +18,11 @@ class HomeController extends GetxController {
   RxString greeting = 'Good Morning'.obs;
 
   final RxList<Doctor> popularDoctors = RxList<Doctor>([]);
+  final RxList<CategoryModel> categories = RxList<CategoryModel>();
 
-  RxList<CategoryModel> categories = <CategoryModel>[].obs;
+  final _categories = <CategoryModel>[].obs;
 
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<CategoryModel> get categories => _categories.toList();
 
   void _updateGreeting() {
     final hour = DateTime.now().hour;
@@ -36,54 +38,46 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // user.bindStream(_auth.authStateChanges()); // Stream for auth state
     _updateGreeting();
     Timer.periodic(const Duration(minutes: 1), (_) => _updateGreeting());
-    // fetchPopularDoctors();
+    fetchCategories();
   }
 
   @override
   onReady() {
     super.onReady();
     isLoading.value = false;
-    // fetchCategories();
-
   }
 
-  // Future<void> fetchPopularDoctors() async {
-  //   try {
-  //     final querySnapshot = await FirebaseFirestore.instance
-  //         .collection('userDoctors')
-  //         .orderBy('totalRating', descending: true)
-  //         .limit(3)
-  //         .get();
-  //
-  //     final doctors = querySnapshot.docs
-  //         .map((doc) => Doctor.fromFirestore(doc.data()))
-  //         .where((doctor) => doctor.userName != null)
-  //         .toList();
-  //
-  //     popularDoctors.value = doctors;
-  //     print('Popular Doctors fetched: ${popularDoctors.length}');
-  //   } catch (error) {
-  //     print('Error fetching popular doctors: $error');
-  //   }
-  // }
-  //
-  // Future<void> fetchCategories() async {
-  //   try {
-  //     final snapshot = await _firestore.collection('categories').get();
-  //     categories.value = snapshot.docs
-  //         .map((doc) => CategoryModel.fromFirestore(doc.data()))
-  //         .toList();
-  //   } catch (e) {
-  //     // Handle error (e.g., display a snackbar)
-  //   }
-  // }
+  Future<List<CategoryModel>> getCategories(String? filter) async {
+    final query = supabase.from('categories').select('id,name,image_url');
 
-  void onPopularDoctorTap(int index) {
-    final Doctor doctor = popularDoctors[index];
-    Get.toNamed('/userDetailsScreen', // Named route from step 1
-        arguments: doctor);
+    late PostgrestResponse response;
+
+    if (filter == null || filter.isEmpty) {
+      response = await query.execute();
+    } else {
+      response = await query.textSearch('name', '$filter%').execute();
+    }
+
+    final error = response.error;
+
+    if (error != null && response.status != 406) {
+      throw Exception(error.message);
+    }
+
+    if (response.data != null) {
+      return (response.data as List<dynamic>)
+          .map((e) => CategoryModel.fromJson(e))
+          .toList();
+    }
+    throw Exception('Failed to get categories');
+    return await getCategories(filter);
   }
+
+  // void onPopularDoctorTap(int index) {
+  //   final Doctor doctor = popularDoctors[index];
+  //   Get.toNamed('/userDetailsScreen', // Named route from step 1
+  //       arguments: doctor);
+  // }
 }

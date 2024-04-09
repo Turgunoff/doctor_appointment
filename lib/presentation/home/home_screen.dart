@@ -154,7 +154,7 @@ class HomeScreen extends StatelessWidget {
                             const SizedBox(height: 0),
                             Text(
                               maxLines: 1,
-                              category.categoryName,
+                              category.name,
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.black87,
