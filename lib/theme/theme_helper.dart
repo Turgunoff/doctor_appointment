@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 
-const primaryColor = Color(0xFF0EBE7E);
+const primaryColor = Color(0xFF1C2A3A);
 
 class ThemeHelper {
   final darkTheme = ThemeData(

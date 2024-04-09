@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.textButton,
     required this.onPressed,
-    this.color = const Color(0xFF0EBE7E),
+    this.color = const Color(0xFF1C2A3A),
     required this.height,
     required this.width,
   });
@@ -31,12 +31,13 @@ class CustomButton extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(100),
           color: color,
         ),
         padding: const EdgeInsets.all(10),
         child: Center(
           child: Text(
+            textAlign: TextAlign.center,
             textButton,
             style: TextStyle(
               color: Colors.white,

@@ -25,9 +25,9 @@ Future<void> main() async {
   // );
   runApp(const MyApp());
   await Supabase.initialize(
-    url: 'https://rfomwhdqxpwjxvpblnat.supabase.co',
+    url: 'https://vrbjjftwqqokhztjzhob.supabase.co',
     anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmb213aGRxeHB3anh2cGJsbmF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIzODk5NjUsImV4cCI6MjAyNzk2NTk2NX0.d3wG_SETjws8su-WafKa0hm0Uijgw4HixCCVnmD4kl0',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyYmpqZnR3cXFva2h6dGp6aG9iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1NTMxOTIsImV4cCI6MjAyODEyOTE5Mn0.RFqHj_oZlaLZT3C4Ckl_12R794me7U8kERA6z9TMlug',
   );
 }
 

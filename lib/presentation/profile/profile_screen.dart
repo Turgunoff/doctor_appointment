@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor/generated/assets.dart';
 import 'package:doctor/presentation/edit_profile_screen/edit_profile_screen.dart';
 import 'package:doctor/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -36,20 +38,20 @@ class ProfileDoctorScreen extends StatelessWidget {
           Scaffold(
             backgroundColor: Colors.transparent,
             extendBodyBehindAppBar: true,
-            appBar: AppBar(
-              centerTitle: true,
-              flexibleSpace: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                    color: Colors.white.withOpacity(0.0),
-                  ),
-                ),
-              ),
-              elevation: 0,
-              backgroundColor: Colors.white.withOpacity(0.0),
-              title: const Text('Profile'),
-            ),
+            // appBar: AppBar(
+            //   centerTitle: true,
+            //   flexibleSpace: ClipRect(
+            //     child: BackdropFilter(
+            //       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            //       child: Container(
+            //         color: Colors.white.withOpacity(0.0),
+            //       ),
+            //     ),
+            //   ),
+            //   elevation: 0,
+            //   backgroundColor: Colors.white.withOpacity(0.0),
+            //   title: const Text('Profile'),
+            // ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.only(top: 110),
@@ -64,16 +66,37 @@ class ProfileDoctorScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Obx(
-                            () => _controller.avatarUrl.value == null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child:
-                                        Image.asset(Assets.imagesUserNotPhoto),
-                                  )
-                                : CircleAvatar(
+                            () => _controller.avatarUrl.value.isNotEmpty
+                                ? CircleAvatar(
                                     radius: 50,
-                                    backgroundImage: NetworkImage(
-                                        _controller.avatarUrl.value),
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: _controller
+                                                .avatarUrl.value !=
+                                            null
+                                        ? Image.network(
+                                            _controller.avatarUrl.value,
+                                            fit: BoxFit.cover,
+                                            loadingBuilder: (context, child,
+                                                    loadingProgress) =>
+                                                loadingProgress == null
+                                                    ? child
+                                                    : const CircularProgressIndicator(),
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    Image.asset(
+                                              Assets.imagesUserNotPhoto,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ).image
+                                        : Image.asset(Assets.imagesUserNotPhoto)
+                                            .image,
+                                  )
+                                : const CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: AssetImage(
+                                      Assets.imagesUserNotPhoto,
+                                    ),
                                   ),
                           ),
                           const SizedBox(height: 20),
@@ -115,6 +138,7 @@ class ProfileDoctorScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     //edit profile, favorite, settings, help, logout
+                    Divider(height: 1, color: Colors.grey.shade300),
                     ListTile(
                       onTap: () => Get.to(() => EditProfileScreen(),
                           transition: Transition.rightToLeftWithFade),
