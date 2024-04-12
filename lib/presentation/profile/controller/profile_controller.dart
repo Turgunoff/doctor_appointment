@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:doctor/generated/assets.dart';
 import 'package:doctor/widgets/custom_button.dart';
+import 'package:doctor/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -68,8 +69,7 @@ class ProfileController extends GetxController {
             color: Colors.red,
             onPressed: () async {
               Get.back(); // Скрываем диалог
-              Get.dialog(const Center(
-                  child: CircularProgressIndicator())); // Индикатор
+              Get.dialog(const LoadingWidget(),transitionDuration: Duration(seconds: 5000)); // Индикатор
               await supabase.auth.signOut();
               Get.offAllNamed(AppRoutes.navigationPage); // Переход
             }),

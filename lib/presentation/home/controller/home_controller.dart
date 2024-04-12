@@ -18,11 +18,9 @@ class HomeController extends GetxController {
   RxString greeting = 'Good Morning'.obs;
 
   final RxList<Doctor> popularDoctors = RxList<Doctor>([]);
-  final RxList<CategoryModel> categories = RxList<CategoryModel>();
+  RxList<CategoryModel> categories = RxList<CategoryModel>();
 
-  final _categories = <CategoryModel>[].obs;
-
-  List<CategoryModel> get categories => _categories.toList();
+  // List<CategoryModel> get categories => _categories.toList();
 
   void _updateGreeting() {
     final hour = DateTime.now().hour;
@@ -49,31 +47,37 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<List<CategoryModel>> getCategories(String? filter) async {
-    final query = supabase.from('categories').select('id,name,image_url');
-
-    late PostgrestResponse response;
-
-    if (filter == null || filter.isEmpty) {
-      response = await query.execute();
-    } else {
-      response = await query.textSearch('name', '$filter%').execute();
-    }
-
-    final error = response.error;
-
-    if (error != null && response.status != 406) {
-      throw Exception(error.message);
-    }
-
-    if (response.data != null) {
-      return (response.data as List<dynamic>)
-          .map((e) => CategoryModel.fromJson(e))
-          .toList();
-    }
-    throw Exception('Failed to get categories');
-    return await getCategories(filter);
+  Future<void> fetchCategories() async {
+    final data = await supabase.from('categories').select('*');
+    // categories = data;
+    print(data);
   }
+
+  // Future<List<CategoryModel>> getCategories(String? filter) async {
+  //   final query = supabase.from('categories').select('id,name,image_url');
+
+  //   late PostgrestResponse response;
+
+  //   if (filter == null || filter.isEmpty) {
+  //     response = await query.execute();
+  //   } else {
+  //     response = await query.textSearch('name', '$filter%').execute();
+  //   }
+
+  //   final error = response.error;
+
+  //   if (error != null && response.status != 406) {
+  //     throw Exception(error.message);
+  //   }
+
+  //   if (response.data != null) {
+  //     return (response.data as List<dynamic>)
+  //         .map((e) => CategoryModel.fromJson(e))
+  //         .toList();
+  //   }
+  //   throw Exception('Failed to get categories');
+  //   return await getCategories(filter);
+  // }
 
   // void onPopularDoctorTap(int index) {
   //   final Doctor doctor = popularDoctors[index];
