@@ -4,21 +4,21 @@
 //
 
 class CategoryModel {
-  final String name;
+  final String nameRu;
+  final String nameUz;
   final String imageUrl;
 
-  CategoryModel({required this.name, required this.imageUrl});
+  CategoryModel({
+    required this.nameRu,
+    required this.nameUz,
+    required this.imageUrl,
+  });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
-      name: json['name'],
-      imageUrl: json['image_url'],
+      nameRu: json['name_ru'] as String,
+      nameUz: json['name_uz'] as String,
+      imageUrl: json['image_url'] as String,
     );
-  }
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'image_url': imageUrl,
-    };
   }
 }

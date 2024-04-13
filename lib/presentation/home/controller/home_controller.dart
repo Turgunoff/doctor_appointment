@@ -20,8 +20,6 @@ class HomeController extends GetxController {
   final RxList<Doctor> popularDoctors = RxList<Doctor>([]);
   RxList<CategoryModel> categories = RxList<CategoryModel>();
 
-  // List<CategoryModel> get categories => _categories.toList();
-
   void _updateGreeting() {
     final hour = DateTime.now().hour;
     if (hour >= 5 && hour < 12) {
@@ -48,9 +46,25 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchCategories() async {
-    final data = await supabase.from('categories').select('*');
-    // categories = data;
-    print(data);
+    // try {
+    //   final response = await supabase.from('categories').select('*');
+
+    //   if (response.error != null) {
+    //     // Обработка ошибок
+    //     print('Error fetching categories: ${response.error?.message}');
+    //     return;
+    //   }
+
+    //   final categoriesList = response.data
+    //           ?.map((categoryData) => CategoryModel.fromJson(categoryData))
+    //           .toList() ??
+    //       [];
+
+    //   categories.assignAll(categoriesList);
+    // } catch (e) {
+    //   // Общая обработка ошибок
+    //   print('Error fetching categories: $e');
+    // }
   }
 
   // Future<List<CategoryModel>> getCategories(String? filter) async {

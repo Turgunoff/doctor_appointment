@@ -117,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 130,
+                  height: 150,
                   child: Obx(() {
                     return ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -126,37 +126,39 @@ class HomeScreen extends StatelessWidget {
                         final category = _homeController.categories[index];
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               margin: const EdgeInsets.only(left: 12),
                               width: 100,
                               height: 100,
+                              padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: Colors.yellow,
+                                color: Theme.of(context).primaryColor,
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(
-                                        'assets/images/frame.png',
-                                        height: 50,
-                                        width: 50,
-                                        fit: BoxFit.cover),
-                                  ),
-                                ],
+                              //child network image
+                              child: ClipRRect(
+                                child: Image.network(
+                                  color: Colors.white,
+                                  category.imageUrl,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 0),
                             Text(
-                              maxLines: 1,
-                              category.name,
+                              category.nameRu,
                               style: const TextStyle(
                                 fontSize: 16,
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            // number of doctors
+                            Text(
+                              _homeController.categories.length.toString(),
+                              style: const TextStyle(
+                                fontSize: 12,
                                 color: Colors.black87,
                                 fontWeight: FontWeight.w400,
                               ),
