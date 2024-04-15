@@ -44,6 +44,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
 
         Get.back();
+        //get dialog with progress indicator
+        Get.dialog(const Center(child: CircularProgressIndicator()),
+            barrierDismissible: false,
+            transitionDuration: const Duration(milliseconds: 200));
         Get.snackbar(
           'Успешно!',
           'Пользователь успешно создан',

@@ -69,7 +69,9 @@ class ProfileController extends GetxController {
             color: Colors.red,
             onPressed: () async {
               Get.back(); // Скрываем диалог
-              Get.dialog(const LoadingWidget(),transitionDuration: Duration(seconds: 5000)); // Индикатор
+              Get.dialog(const Center(child: CircularProgressIndicator()),
+                  transitionDuration:
+                      const Duration(seconds: 5000)); // Индикатор
               await supabase.auth.signOut();
               Get.offAllNamed(AppRoutes.navigationPage); // Переход
             }),

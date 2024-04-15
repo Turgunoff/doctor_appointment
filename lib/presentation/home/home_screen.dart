@@ -156,7 +156,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             // number of doctors
                             Text(
-                              _homeController.categories.length.toString(),
+                              '${category.doctorCount} Doctors',
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.black87,

@@ -46,56 +46,14 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchCategories() async {
-    // try {
-    //   final response = await supabase.from('categories').select('*');
+    final data = await supabase
+        .from('categories')
+        .select('*')
+        .eq('doctors.category_id', 'categories.category_id');
 
-    //   if (response.error != null) {
-    //     // Обработка ошибок
-    //     print('Error fetching categories: ${response.error?.message}');
-    //     return;
-    //   }
-
-    //   final categoriesList = response.data
-    //           ?.map((categoryData) => CategoryModel.fromJson(categoryData))
-    //           .toList() ??
-    //       [];
-
-    //   categories.assignAll(categoriesList);
-    // } catch (e) {
-    //   // Общая обработка ошибок
-    //   print('Error fetching categories: $e');
-    // }
+    List<CategoryModel> categoriesList = data
+        .map((categoryData) => CategoryModel.fromJson(categoryData))
+        .toList();
+    categories.assignAll(categoriesList);
   }
-
-  // Future<List<CategoryModel>> getCategories(String? filter) async {
-  //   final query = supabase.from('categories').select('id,name,image_url');
-
-  //   late PostgrestResponse response;
-
-  //   if (filter == null || filter.isEmpty) {
-  //     response = await query.execute();
-  //   } else {
-  //     response = await query.textSearch('name', '$filter%').execute();
-  //   }
-
-  //   final error = response.error;
-
-  //   if (error != null && response.status != 406) {
-  //     throw Exception(error.message);
-  //   }
-
-  //   if (response.data != null) {
-  //     return (response.data as List<dynamic>)
-  //         .map((e) => CategoryModel.fromJson(e))
-  //         .toList();
-  //   }
-  //   throw Exception('Failed to get categories');
-  //   return await getCategories(filter);
-  // }
-
-  // void onPopularDoctorTap(int index) {
-  //   final Doctor doctor = popularDoctors[index];
-  //   Get.toNamed('/userDetailsScreen', // Named route from step 1
-  //       arguments: doctor);
-  // }
 }
